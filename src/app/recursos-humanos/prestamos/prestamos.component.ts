@@ -15,8 +15,8 @@ export class PrestamosComponent implements OnInit {
   private router = inject(Router);
 
   configuracion: datatableConfig = {
-    alias: ['Calendario', 'Empleado', 'Cuenta', 'Empleado', 'Monto'],
-    encabezados: ['calendario', 'empleado', 'cuenta', 'empleado', 'monto'],
+    alias: ['Calendario', 'Empleado', 'Cuenta', 'Empleado', 'Monto', 'Abonos', 'Saldo'],
+    encabezados: ['calendario', 'empleado', 'cuenta', 'empleado', 'monto', 'abonos', 'saldo'],
     busqueda: true
   };
   datos: any[] = [];

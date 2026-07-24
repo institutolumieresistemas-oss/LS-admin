@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
 })
 export class CreditosComponent {
   configuracion: datatableConfig = {
-    alias: ['Calendario', 'Nivel', 'Prestador', 'Cuenta', 'Sucursal', 'Empleado', 'Monto'],
-    encabezados: ['calendario', 'nivel', 'prestador', 'cuenta', 'sucursal', 'empleado', 'monto'],
+    alias: ['Calendario', 'Nivel', 'Prestador', 'Cuenta', 'Sucursal', 'Empleado', 'Monto', 'Abonos', 'Saldo'],
+    encabezados: ['calendario', 'nivel', 'prestador', 'cuenta', 'sucursal', 'empleado', 'monto', 'pagos', 'saldo'],
     busqueda: true
   };
   datos: any;
