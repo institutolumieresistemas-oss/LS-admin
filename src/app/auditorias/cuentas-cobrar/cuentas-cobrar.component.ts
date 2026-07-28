@@ -82,4 +82,100 @@ export class CuentasCobrarComponent {
   irAlPrestamo(idPrestamo: number) {
     this.router.navigate(['/admin/prestamo', idPrestamo]);
   }
+
+  resumenCreditos() {
+    if (this.creditosCruzados.length === 0) {
+      this.generales.mensajeError('No hay créditos cruzados para resumir');
+      return;
+    }
+    // Agrupar saldos por calendario deudor
+    const agrupado: Record<string, number> = {};
+    this.creditosCruzados.forEach(c => {
+      const nombre = c.deudor || 'Calendario deudor no identificado';
+      agrupado[nombre] = (agrupado[nombre] || 0) + Number(c.saldo);
+    });
+
+    let html = '<ul class="list-group text-left" style="text-align: left;">';
+    Object.keys(agrupado).forEach(key => {
+      html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+        <span>El calendario <strong>${key}</strong> nos debe</span>
+        <span class="badge badge-pill font-13" style="color: #000000; font-weight: bold; background-color: #f1f5f9;">$${agrupado[key].toLocaleString('es-MX', {minimumFractionDigits: 2})}</span>
+      </li>`;
+    });
+    html += '</ul>';
+
+    import('sweetalert2').then(Swal => {
+      Swal.default.fire({
+        title: 'Resumen de Créditos por Cobrar',
+        html: html,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        confirmButtonColor: '#1153c0'
+      });
+    });
+  }
+
+  resumenIngresos() {
+    if (this.ingresosCruzados.length === 0) {
+      this.generales.mensajeError('No hay ingresos cruzados para resumir');
+      return;
+    }
+    // Agrupar por calendario deudor (donde se cobró físicamente)
+    const agrupado: Record<string, number> = {};
+    this.ingresosCruzados.forEach(i => {
+      const nombre = i.calendarioDondeSeCobro || 'Otro';
+      agrupado[nombre] = (agrupado[nombre] || 0) + Number(i.monto);
+    });
+
+    let html = '<ul class="list-group text-left" style="text-align: left;">';
+    Object.keys(agrupado).forEach(key => {
+      html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+        <span>El calendario <strong>${key}</strong> nos debe (Ingresos)</span>
+        <span class="badge badge-pill font-13" style="color: #000000; font-weight: bold; background-color: #f1f5f9;">$${agrupado[key].toLocaleString('es-MX', {minimumFractionDigits: 2})}</span>
+      </li>`;
+    });
+    html += '</ul>';
+
+    import('sweetalert2').then(Swal => {
+      Swal.default.fire({
+        title: 'Resumen de Ingresos Cruzados (Por Cobrar)',
+        html: html,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        confirmButtonColor: '#ff6442'
+      });
+    });
+  }
+
+  resumenAbonos() {
+    if (this.abonosCruzados.length === 0) {
+      this.generales.mensajeError('No hay abonos cruzados para resumir');
+      return;
+    }
+    // Agrupar por calendario deudor (donde se cobró)
+    const agrupado: Record<string, number> = {};
+    this.abonosCruzados.forEach(a => {
+      const nombre = a.calendarioDondeSeCobro || 'Otro';
+      agrupado[nombre] = (agrupado[nombre] || 0) + Number(a.monto);
+    });
+
+    let html = '<ul class="list-group text-left" style="text-align: left;">';
+    Object.keys(agrupado).forEach(key => {
+      html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+        <span>El calendario <strong>${key}</strong> nos debe (Abonos cobrados)</span>
+        <span class="badge badge-pill font-13" style="color: #000000; font-weight: bold; background-color: #f1f5f9;">$${agrupado[key].toLocaleString('es-MX', {minimumFractionDigits: 2})}</span>
+      </li>`;
+    });
+    html += '</ul>';
+
+    import('sweetalert2').then(Swal => {
+      Swal.default.fire({
+        title: 'Resumen de Abonos Cruzados (Por Cobrar)',
+        html: html,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        confirmButtonColor: '#4facfe'
+      });
+    });
+  }
 }

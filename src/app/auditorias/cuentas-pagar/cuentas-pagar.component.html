@@ -31,7 +31,9 @@
                         <div class="card custom-card-container card-gradient-blue shadow-sm border-0 h-100 p-3">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h6 class="text-white mb-0 font-weight-bold">Créditos Activos</h6>
-                                <i class="fa fa-credit-card fa-2x opacity-5"></i>
+                                <button class="btn btn-xs btn-outline-light font-weight-bold border-0" (click)="resumenCreditos(); $event.stopPropagation();">
+                                    <i class="fa fa-list mr-1"></i> Resumen
+                                </button>
                             </div>
                             <h2 class="text-white font-weight-bold mb-1">{{ totalCreditos | currency }}</h2>
                             <p class="text-white opacity-8 mb-0 font-12">Saldo pendiente que debemos</p>
@@ -69,7 +71,9 @@
                         <div class="card custom-card-container card-gradient-orange shadow-sm border-0 h-100 p-3">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h6 class="text-white mb-0 font-weight-bold">Ingresos Cruzados (En Contra)</h6>
-                                <i class="fa fa-exchange-alt fa-2x opacity-5"></i>
+                                <button class="btn btn-xs btn-outline-light font-weight-bold border-0" (click)="resumenIngresos(); $event.stopPropagation();">
+                                    <i class="fa fa-list mr-1"></i> Resumen
+                                </button>
                             </div>
                             <h2 class="text-white font-weight-bold mb-1">{{ totalIngresosCruzados | currency }}</h2>
                             <p class="text-white opacity-8 mb-0 font-12">Dinero cobrado aquí que pertenece a otros</p>
@@ -109,7 +113,9 @@
                         <div class="card custom-card-container card-gradient-green shadow-sm border-0 h-100 p-3">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h6 class="text-white mb-0 font-weight-bold">Abonos Cruzados (En Contra)</h6>
-                                <i class="fa fa-hand-holding-usd fa-2x opacity-5"></i>
+                                <button class="btn btn-xs btn-outline-light font-weight-bold border-0" (click)="resumenAbonos(); $event.stopPropagation();">
+                                    <i class="fa fa-list mr-1"></i> Resumen
+                                </button>
                             </div>
                             <h2 class="text-white font-weight-bold mb-1">{{ totalAbonosCruzados | currency }}</h2>
                             <p class="text-white opacity-8 mb-0 font-12">Cobros realizados aquí de préstamos ajenos</p>
