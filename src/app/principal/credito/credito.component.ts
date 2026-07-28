@@ -15,8 +15,8 @@ export class CreditoComponent implements OnInit {
   private generales = inject(GeneralesService);
 
   configuracion: datatableConfig = {
-    alias: ['Forma de pago', 'Cuenta', 'Monto', 'Empleado', 'Ingreso', 'Egreso'],
-    encabezados: ['forma', 'cuenta', 'monto', 'empleado', 'ingreso', 'egreso'],
+    alias: ['Forma de pago', 'Cuenta', 'Monto', 'Tipo de abono', 'Empleado', 'Ingreso', 'Egreso'],
+    encabezados: ['forma', 'cuenta', 'monto', 'tipoNombre', 'empleado', 'ingreso', 'egreso'],
     busqueda: true
   };
   id: any;

@@ -1,0 +1,74 @@
+<div class="card bg-light border-0">
+    <div class="card-header pb-0 bg-transparent border-0 mt-2">
+        <div class="d-flex align-items-center justify-content-between">
+            <h4 class="mb-0 text-dark font-weight-bold tracking-tight">
+                Balance de Calendarios
+            </h4>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="container-fluid px-0">
+
+            <!-- Grid de Tarjetas Minimalistas -->
+            <div class="row">
+                <div class="col-xl-4 col-lg-6 col-md-12 mb-4" *ngFor="let item of balances">
+                    <div class="card card-minimal shadow-sm border-0 h-100" 
+                         [ngClass]="item.utilidadReal >= 0 ? 'border-left-success' : 'border-left-danger'">
+                        
+                        <div class="card-body p-4 d-flex flex-column justify-content-between">
+                            <!-- Cabecera de la tarjeta -->
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <h5 class="card-title-gradient font-weight-bold mb-0">{{ item.calendario }}</h5>
+                                </div>
+                                <div class="icon-circle" [ngClass]="item.utilidadReal >= 0 ? 'bg-light-success' : 'bg-light-danger'">
+                                    <i class="fa" [ngClass]="item.utilidadReal >= 0 ? 'fa-arrow-up text-success' : 'fa-arrow-down text-danger'"></i>
+                                </div>
+                            </div>
+
+                            <!-- Listado de datos en filas limpias -->
+                            <div class="balance-details-list my-3">
+                                <!-- Ingresos -->
+                                <div class="d-flex justify-content-between align-items-center py-2 border-bottom-dotted">
+                                    <span class="text-muted font-13"><i class="fa fa-plus-circle text-success mr-2"></i> Ingresos Reales</span>
+                                    <div class="text-right">
+                                        <span class="font-weight-bold text-dark font-14">{{ item.ingresosReales | currency }}</span>
+                                        <small class="text-muted d-block font-10">Cobrar: {{ item.cuentasCobrar | currency }}</small>
+                                    </div>
+                                </div>
+
+                                <!-- Egresos -->
+                                <div class="d-flex justify-content-between align-items-center py-2">
+                                    <span class="text-muted font-13"><i class="fa fa-minus-circle text-danger mr-2"></i> Egresos Reales</span>
+                                    <div class="text-right">
+                                        <span class="font-weight-bold text-dark font-14">{{ item.egresosReales | currency }}</span>
+                                        <small class="text-muted d-block font-10">Pagar: {{ item.cuentasPagar | currency }}</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Utilidad Real consolidada en la parte inferior -->
+                            <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                                <span class="text-muted font-weight-bold font-12 text-uppercase">Utilidad Real</span>
+                                <span class="font-weight-bold font-20" [ngClass]="item.utilidadReal >= 0 ? 'text-success' : 'text-danger'">
+                                    {{ item.utilidadReal | currency }}
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <!-- Si no hay registros -->
+                <div *ngIf="balances.length === 0" class="col-12">
+                    <div class="alert alert-secondary text-center py-5">
+                        <i class="fa fa-folder-open fa-3x mb-3 text-muted"></i>
+                        <p class="mb-0 font-weight-bold">No se encontraron calendarios registrados a partir del ID 26.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<app-cargando *ngIf="cargando"></app-cargando>

@@ -1,0 +1,83 @@
+/* Estilos idénticos compartidos para interactividad de popovers en cuentas por pagar */
+.custom-card-container {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-radius: 12px;
+    overflow: visible;
+}
+
+.custom-card-container:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12) !important;
+}
+
+.popover-desglose {
+    position: absolute;
+    bottom: 105%;
+    left: 5%;
+    width: 90%;
+    z-index: 1050;
+    display: none;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    box-shadow: 0 -15px 35px rgba(50, 50, 93, 0.1), 0 -5px 15px rgba(0, 0, 0, 0.07);
+    padding: 1rem;
+    color: #333333;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+
+.popover-desglose::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 20px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: #ffffff transparent transparent transparent;
+}
+
+.custom-card-container:hover .popover-desglose {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.card-gradient-blue {
+    background: linear-gradient(135deg, #1d8cf8 0%, #1153c0 100%);
+    color: #ffffff !important;
+}
+
+.card-gradient-orange {
+    background: linear-gradient(135deg, #ff8d72 0%, #ff6442 100%);
+    color: #ffffff !important;
+}
+
+.card-gradient-green {
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+    color: #ffffff !important;
+}
+
+.popover-desglose h6 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #f1f3f5;
+    padding-bottom: 0.5rem;
+}
+
+.popover-desglose table {
+    font-size: 0.78rem;
+    margin-bottom: 0;
+}
+
+.popover-desglose table th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+}

@@ -7,6 +7,10 @@ import { ModalObservacionesIngresoComponent } from './ingresos-auditorias/modale
 import { BalanceCuentasComponent } from './balance-cuentas/balance-cuentas.component';
 import { AuditarComponent } from './auditar/auditar.component';
 import { ModalTraspasoComponent } from './balance-cuentas/modales/modal-traspaso/modal-traspaso.component';
+import { CuentasCobrarComponent } from './cuentas-cobrar/cuentas-cobrar.component';
+import { CuentasPagarComponent } from './cuentas-pagar/cuentas-pagar.component';
+import { BalanceCalendariosComponent } from './balance-calendarios/balance-calendarios.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -17,11 +21,15 @@ import { ModalTraspasoComponent } from './balance-cuentas/modales/modal-traspaso
     ModalObservacionesIngresoComponent,
     BalanceCuentasComponent,
     AuditarComponent,
-    ModalTraspasoComponent
+    ModalTraspasoComponent,
+    CuentasCobrarComponent,
+    CuentasPagarComponent,
+    BalanceCalendariosComponent
   ],
   imports: [
     CommonModule,
-    UiSearchModule
+    UiSearchModule,
+    FormsModule
   ]
 })
 export class AuditoriasModule { }

@@ -41,7 +41,7 @@ export class PrestamoComponent {
   traer(){
     this.servicio.traer({id: this.id}).subscribe((respuesta: any) => {
       this.datos = respuesta.datos;
-      this.abonos = respuesta.datos.abonos;
+      this.abonos = respuesta.datos.lista_abonos;
       this.listas = respuesta.listas;
     });
   }

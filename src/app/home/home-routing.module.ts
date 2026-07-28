@@ -131,6 +131,9 @@ import { ReporteIngresosBasicoComponent } from '../reportes/reporte-ingresos-bas
 import { ReporteEgresosBasicoComponent } from '../reportes/reporte-egresos-basico/reporte-egresos-basico.component';
 import { PrestamoComponent } from '../principal/prestamo/prestamo.component';
 import { AlumnoCodigoComponent } from '../principal/alumno-codigo/alumno-codigo.component';
+import { CuentasCobrarComponent } from '../auditorias/cuentas-cobrar/cuentas-cobrar.component';
+import { CuentasPagarComponent } from '../auditorias/cuentas-pagar/cuentas-pagar.component';
+import { BalanceCalendariosComponent } from '../auditorias/balance-calendarios/balance-calendarios.component';
 
 const routes: Routes = [
   {path: '', canActivate: [auntenticacionGuard], component: InicioComponent, children: [
@@ -247,6 +250,9 @@ const routes: Routes = [
     { path: 'aplicacionCursos', canActivate: [auntenticacionGuard], component: AplicacionCursosComponent },
     { path: 'balanceCuentas', canActivate: [auntenticacionGuard], component: BalanceCuentasComponent },
     { path: 'auditar', canActivate: [auntenticacionGuard], component: AuditarComponent },
+    { path: 'cuentasCobrar', canActivate: [auntenticacionGuard], component: CuentasCobrarComponent },
+    { path: 'cuentasPagar', canActivate: [auntenticacionGuard], component: CuentasPagarComponent },
+    { path: 'balanceCalendarios', canActivate: [auntenticacionGuard], component: BalanceCalendariosComponent },
     { path: 'reporteVentas', canActivate: [auntenticacionGuard], component: ReporteVentasComponent },
     { path: 'prestadores', canActivate: [auntenticacionGuard], component: PrestadoresComponent },
     { path: 'creditos', canActivate: [auntenticacionGuard], component: CreditosComponent },

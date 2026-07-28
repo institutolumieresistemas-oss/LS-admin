@@ -1,0 +1,152 @@
+<div class="card">
+    <div class="card-header pb-0 bg-lumiere">
+        <div class="d-flex align-items-center justify-content-between">
+            <h5 class="mb-1 text-white">Cuentas por Cobrar</h5>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="container-fluid">
+            <!-- Selección de Calendario -->
+            <div class="row align-items-end mb-4">
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label font-weight-bold">Selecciona el Calendario:</label>
+                    <select class="form-control" [(ngModel)]="idCalendarioSeleccionado" (change)="consultarCuentasCobrar()">
+                        <option value="0">-- Selecciona un calendario --</option>
+                        <option *ngFor="let cal of calendarios" [value]="cal.id">{{ cal.nombre }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Si no hay calendario seleccionado -->
+            <div *ngIf="!idCalendarioSeleccionado" class="alert alert-secondary text-center">
+                Por favor, selecciona un calendario para visualizar las cuentas por cobrar correspondientes.
+            </div>
+
+            <!-- Contenido cuando hay calendario seleccionado -->
+            <div *ngIf="idCalendarioSeleccionado">
+                <div class="row">
+                    
+                    <!-- Tarjeta 1: Créditos Hechos a Otros Calendarios (A Favor) -->
+                    <div class="col-lg-4 col-md-12 mb-4">
+                        <div class="card custom-card-container card-gradient-blue shadow-sm border-0 h-100 p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="text-white mb-0 font-weight-bold">Créditos Otorgados a Otros</h6>
+                                <i class="fa fa-credit-card fa-2x opacity-5"></i>
+                            </div>
+                            <h2 class="text-white font-weight-bold mb-1">{{ totalCreditosCruzados | currency }}</h2>
+                            <p class="text-white opacity-8 mb-0 font-12">Créditos hechos a otros calendarios</p>
+                            
+                            <!-- Popover Desglose -->
+                            <div class="popover-desglose">
+                                <h6>Desglose de Créditos hechos a otros Calendarios</h6>
+                                <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
+                                    <table class="table table-sm table-hover table-bordered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Calendario Deudor</th>
+                                                <th>Monto</th>
+                                                <th>Saldo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let cred of creditosCruzados">
+                                                <td>{{ cred.deudor }}</td>
+                                                <td>{{ cred.monto | currency }}</td>
+                                                <td class="text-danger font-weight-bold">{{ cred.saldo | currency }}</td>
+                                            </tr>
+                                            <tr *ngIf="creditosCruzados.length === 0">
+                                                <td colspan="3" class="text-center text-muted">Sin detalles</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 2: Ingresos Cruzados (A Favor) -->
+                    <div class="col-lg-4 col-md-12 mb-4">
+                        <div class="card custom-card-container card-gradient-orange shadow-sm border-0 h-100 p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="text-white mb-0 font-weight-bold">Ingresos Cruzados (Cobrados en otro calendario)</h6>
+                                <i class="fa fa-exchange-alt fa-2x opacity-5"></i>
+                            </div>
+                            <h2 class="text-white font-weight-bold mb-1">{{ totalIngresosCruzados | currency }}</h2>
+                            <p class="text-white opacity-8 mb-0 font-12">Dinero ingresado en cuentas de otros calendarios</p>
+
+                            <!-- Popover Desglose -->
+                            <div class="popover-desglose">
+                                <h6>Desglose de Ingresos Cruzados a Favor</h6>
+                                <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
+                                    <table class="table table-sm table-hover table-bordered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Folio</th>
+                                                <th>Fecha</th>
+                                                <th>Concepto</th>
+                                                <th>Monto</th>
+                                                <th>Cobrado en</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let ing of ingresosCruzados">
+                                                <td>{{ ing.folio }}</td>
+                                                <td>{{ ing.fecha }}</td>
+                                                <td>{{ ing.concepto }}</td>
+                                                <td class="font-weight-bold">{{ ing.monto | currency }}</td>
+                                                <td>{{ ing.calendarioDondeSeCobro }}</td>
+                                            </tr>
+                                            <tr *ngIf="ingresosCruzados.length === 0">
+                                                <td colspan="5" class="text-center text-muted">Sin detalles</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 3: Abonos de Préstamos Cruzados (A Favor) -->
+                    <div class="col-lg-4 col-md-12 mb-4">
+                        <div class="card custom-card-container card-gradient-green shadow-sm border-0 h-100 p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="text-white mb-0 font-weight-bold">Abonos Cruzados (Cobrados en otro calendario)</h6>
+                                <i class="fa fa-hand-holding-usd fa-2x opacity-5"></i>
+                            </div>
+                            <h2 class="text-white font-weight-bold mb-1">{{ totalAbonosCruzados | currency }}</h2>
+                            <p class="text-white opacity-8 mb-0 font-12">Abonos a nuestros préstamos cobrados en otros calendarios</p>
+
+                            <!-- Popover Desglose -->
+                            <div class="popover-desglose">
+                                <h6>Desglose de Abonos Cruzados a Favor</h6>
+                                <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
+                                    <table class="table table-sm table-hover table-bordered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Empleado</th>
+                                                <th>Abono</th>
+                                                <th>Cobrado en</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let abono of abonosCruzados" (dblclick)="irAlPrestamo(abono.prestamo_id)" style="cursor: pointer;" title="Doble clic para ver desglose de préstamo">
+                                                <td>{{ abono.empleado }}</td>
+                                                <td class="text-success font-weight-bold">{{ abono.monto | currency }}</td>
+                                                <td>{{ abono.calendarioDondeSeCobro }}</td>
+                                            </tr>
+                                            <tr *ngIf="abonosCruzados.length === 0">
+                                                <td colspan="3" class="text-center text-muted">Sin detalles</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-cargando *ngIf="cargando"></app-cargando>
