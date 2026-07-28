@@ -23,11 +23,61 @@
                     <app-input [etiqueta]="'Fecha de Nacimiento'" [valor]="datos.fechaNacimiento" [mayusculas]="true" (emitidor)="datos.fechaNacimiento = $event;"></app-input>
                 </div>
             </div>
-            <div class="row">
+            <div class="row mt-3">
                 <div class="col-sm-12">
-                    <button class="btn btn-success" (click)="modificar()">Modificar</button>
+                    <button class="btn btn-primary" (click)="modificar()"><i class="fa fa-save mr-1"></i> Guardar Nombre</button>
                 </div>
             </div>
+
+            <!-- Sección de Datos Escolares -->
+            <h5 class="mt-4 mb-3 border-bottom pb-2 text-dark font-weight-bold">Datos Escolares</h5>
+            <div class="row">
+                <div class="col-sm-4 mb-3">
+                    <label class="font-weight-bold text-muted font-12 mb-1">Subnivel</label>
+                    <select class="form-control" [(ngModel)]="escolares.idSubnivel">
+                        <option [value]="0">Selecciona Subnivel</option>
+                        <option *ngFor="let item of listas.subniveles" [value]="item.id">{{ item.nombre }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <label class="font-weight-bold text-muted font-12 mb-1">Tipo de Escuela</label>
+                    <select class="form-control" [(ngModel)]="escolares.idTipoEscuela">
+                        <option [value]="0">Selecciona Tipo de Escuela</option>
+                        <option *ngFor="let item of listas.tipos" [value]="item.id">{{ item.nombre }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <label class="font-weight-bold text-muted font-12 mb-1">Escuela</label>
+                    <select class="form-control" [(ngModel)]="escolares.idEscuela">
+                        <option [value]="0">Selecciona Escuela</option>
+                        <option *ngFor="let item of listas.escuelas" [value]="item.id">{{ item.nombre }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <label class="font-weight-bold text-muted font-12 mb-1">Estado</label>
+                    <select class="form-control" [(ngModel)]="escolares.idEstado">
+                        <option [value]="0">Selecciona Estado</option>
+                        <option *ngFor="let item of listas.estados" [value]="item.id">{{ item.nombre }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <label class="font-weight-bold text-muted font-12 mb-1">Municipio</label>
+                    <select class="form-control" [(ngModel)]="escolares.idMunicipio">
+                        <option [value]="0">Selecciona Municipio</option>
+                        <option *ngFor="let item of listas.municipios" [value]="item.id">{{ item.nombre }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <label class="font-weight-bold text-muted font-12 mb-1">Promedio</label>
+                    <input type="text" class="form-control" [(ngModel)]="escolares.promedio" placeholder="Ej. 9.5">
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-sm-12">
+                    <button class="btn btn-success" (click)="guardarEscolares()"><i class="fa fa-save mr-1"></i> Guardar Escolares</button>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

@@ -39,13 +39,22 @@ export class DatosAlumnoPrincipalComponent {
       idEscuela: 0,
       idEstado: 0,
       idMunicipio: 0,
-      promedio: 0,
+      promedio: '',
       modificar: false
     }
   }
-  listas = {
+  listas: {
+    estados: any[];
+    municipios: any[];
+    subniveles: any[];
+    tipos: any[];
+    escuelas: any[];
+  } = {
     estados: [],
-    municipios: []
+    municipios: [],
+    subniveles: [],
+    tipos: [],
+    escuelas: []
   }
   @Input() alumno: any;
   @Output() emitidor = new EventEmitter();
@@ -118,5 +127,19 @@ export class DatosAlumnoPrincipalComponent {
         this.generales.interpretarError(error);
       });
     }
+  }
+
+  modificarEscolares(dato: any){
+    this.cargando = true;
+    dato.id = this.alumno;
+    this.servicio.modificarEscolares(dato).subscribe((respuesta: any) => {
+      this.cargando = false;
+      this.generales.mensajeCorrecto('Datos escolares modificados correctamente');
+      this.datos.escolares.modificar = false;
+    },
+    error => {
+      this.cargando = false;
+      this.generales.interpretarError(error);
+    });
   }
 }

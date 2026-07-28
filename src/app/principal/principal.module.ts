@@ -17,6 +17,7 @@ import { EmpleadoNominaPrincipalComponent } from './nomina-principal/componentes
 import { CuentaNominaPrincipalComponent } from './nomina-principal/componentes/cuenta-nomina-principal/cuenta-nomina-principal.component';
 import { RecursosHumanosModule } from '../recursos-humanos/recursos-humanos.module';
 import { AlumnoPrincipalComponent } from './alumno-principal/alumno-principal.component';
+import { FormsModule } from '@angular/forms';
 import { DatosAlumnoPrincipalComponent } from './alumno-principal/componentes/datos-alumno-principal/datos-alumno-principal.component';
 import { GeneralesAlumnoPrincipalComponent } from './alumno-principal/componentes/generales-alumno-principal/generales-alumno-principal.component';
 import { PadreAlumnoPrincipalComponent } from './alumno-principal/componentes/padre-alumno-principal/padre-alumno-principal.component';
@@ -91,7 +92,8 @@ import { AlumnoCodigoComponent } from './alumno-codigo/alumno-codigo.component';
     UiSearchModule,
     RecursosHumanosModule,
     AdministradorModule,
-    LumiereSocialModule
+    LumiereSocialModule,
+    FormsModule
   ]
 })
 export class PrincipalModule { }

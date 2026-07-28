@@ -84,6 +84,11 @@ export class AlumnosService {
     const url = this.uri + 'modificarNombre';
     return this.http.post(url, body, {headers: this.headers}).pipe( map(respuesta => respuesta) );
   }
+
+  modificarEscolares(body: any){
+    const url = this.uri + 'modificarEscolares';
+    return this.http.post(url, body, {headers: this.headers}).pipe( map(respuesta => respuesta) );
+  }
   
   validarPersonales(dato: any){
     if(this.generales.validarString(dato.nombre)){

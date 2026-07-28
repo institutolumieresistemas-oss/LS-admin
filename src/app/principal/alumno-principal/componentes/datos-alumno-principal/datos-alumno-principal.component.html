@@ -1,3 +1,34 @@
 <app-generales-alumno-principal [datos]="datos.generales" (emitidor)="personales($event);"></app-generales-alumno-principal>
 <app-padre-alumno-principal [datos]="datos.tutor" (emitidor)="tutor($event);"></app-padre-alumno-principal>
 <app-domicilio-alumno-principal [datos]="datos.domicilio" [estados]="listas.estados" [municipios]="listas.municipios" (emitidor)="domicilio($event);"></app-domicilio-alumno-principal>
+
+<!-- Nueva Sección: Datos Escolares Modificables -->
+<div class="row mt-4 card-body border-top">
+    <div class="col-sm-12">
+        <app-checktimes [activo]="datos.escolares.modificar" (emitidor)="datos.escolares.modificar = $event;" [texto]="'Datos Escolares'"></app-checktimes>
+    </div>
+    
+    <div class="col-sm-4">
+        <app-select [etiqueta]="'Subnivel'" [datos]="listas.subniveles" [dato]="datos.escolares.idSubnivel" [des]="!datos.escolares.modificar" (emitidor)="datos.escolares.idSubnivel = $event;"></app-select>
+    </div>
+    <div class="col-sm-4">
+        <app-select [etiqueta]="'Tipo de Escuela'" [datos]="listas.tipos" [dato]="datos.escolares.idTipoEscuela" [des]="!datos.escolares.modificar" (emitidor)="datos.escolares.idTipoEscuela = $event;"></app-select>
+    </div>
+    <div class="col-sm-4">
+        <app-select [etiqueta]="'Escuela'" [datos]="listas.escuelas" [dato]="datos.escolares.idEscuela" [des]="!datos.escolares.modificar" (emitidor)="datos.escolares.idEscuela = $event;"></app-select>
+    </div>
+    
+    <div class="col-sm-4 mt-2">
+        <app-select [etiqueta]="'Estado'" [datos]="listas.estados" [dato]="datos.escolares.idEstado" [des]="!datos.escolares.modificar" (emitidor)="datos.escolares.idEstado = $event;"></app-select>
+    </div>
+    <div class="col-sm-4 mt-2">
+        <app-select [etiqueta]="'Municipio'" [datos]="listas.municipios" [dato]="datos.escolares.idMunicipio" [des]="!datos.escolares.modificar" (emitidor)="datos.escolares.idMunicipio = $event;"></app-select>
+    </div>
+    <div class="col-sm-4 mt-2">
+        <app-input [etiqueta]="'Promedio'" [valor]="datos.escolares.promedio.toString()" [activo]="!datos.escolares.modificar" (emitidor)="datos.escolares.promedio = $event;"></app-input>
+    </div>
+    
+    <div class="col-sm-12 text-end mt-3" *ngIf="datos.escolares.modificar">
+        <button class="btn btn-success" (click)="modificarEscolares(datos.escolares);"><i class="fa fa-save mr-1"></i> Guardar Escolares</button>
+    </div>
+</div>
