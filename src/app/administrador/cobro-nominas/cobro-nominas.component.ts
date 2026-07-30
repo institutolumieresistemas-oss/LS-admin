@@ -11,8 +11,8 @@ import { PdfService } from '../../servicios/pdf.service';
 })
 export class CobroNominasComponent {
   configuracion: datatableConfig = {
-    alias: ['Folio', 'Departamento', 'Calendario', 'Empleado', 'Nivel', 'Total'],
-    encabezados: ['folio', 'departamento', 'calendario', 'empleado', 'nivel', 'total'],
+    alias: ['Folio', 'Departamento', 'Calendario', 'Empleado', 'Nivel', 'Total Efectivo', 'Total Deposito', 'Total'],
+    encabezados: ['folio', 'departamento', 'calendario', 'empleado', 'nivel', 'totalEfectivo', 'totalDeposito', 'total'],
     busqueda: true
   };
   datos: any;

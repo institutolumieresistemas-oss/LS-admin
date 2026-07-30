@@ -12,8 +12,8 @@ import { Router } from '@angular/router';
 })
 export class NominasComponent {
   configuracion: datatableConfig = {
-    alias: ['Nomina', 'Departamento', 'Empleado', 'Nivel', 'Calendario', 'Sucursal', 'Total'],
-    encabezados: ['folio', 'departamento', 'empleado', 'nivel', 'calendario', 'sucursal', 'total'],
+    alias: ['Nomina', 'Departamento', 'Empleado', 'Nivel', 'Calendario', 'Sucursal', 'Total Efectivo', 'Total Deposito', 'Total'],
+    encabezados: ['folio', 'departamento', 'empleado', 'nivel', 'calendario', 'sucursal', 'totalEfectivo', 'totalDeposito', 'total'],
     busqueda: true
   };
   listas = {

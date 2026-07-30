@@ -1315,21 +1315,57 @@ export class PdfService {
 
       pdf.add(pdf.ln(2));
 
+      let totalPercepcionesEfectivo = 0;
+      let totalPercepcionesDeposito = 0;
+      let totalDeduccionesEfectivo = 0;
+      let totalDeduccionesDeposito = 0;
+
+      respuesta.percepciones.forEach((element: any) => {
+        if (parseInt(element.idFormaPago) === 1) {
+          totalPercepcionesEfectivo += parseFloat(element.monto);
+        } else {
+          totalPercepcionesDeposito += parseFloat(element.monto);
+        }
+      });
+
+      respuesta.deducciones.forEach((element: any) => {
+        if (parseInt(element.idFormaPago) === 1) {
+          totalDeduccionesEfectivo += parseFloat(element.monto);
+        } else {
+          totalDeduccionesDeposito += parseFloat(element.monto);
+        }
+      });
+
       let tablaTotales = new Table([
         [
-          new Cell(new Txt('Suma').bold().fontSize(8).end).fillColor('#2F75B5').color('white').end,
-          new Cell(new Txt('$' + this.generales.milesNumeros(respuesta.totalPercepciones)).bold().fontSize(8).end).end,
-          new Cell(new Txt('$' + this.generales.milesNumeros(respuesta.totalDeducciones)).bold().fontSize(8).end).end,
+          new Cell(new Txt('Percepciones en Efectivo:').fontSize(8).end).end,
+          new Cell(new Txt('$' + this.generales.milesNumeros(totalPercepcionesEfectivo.toString())).fontSize(8).end).alignment('right').end,
         ],
         [
-          new Cell(new Txt('Subtotal').bold().fontSize(8).end).fillColor('#2F75B5').color('white').end,
-          new Cell(new Txt('$' + this.generales.milesNumeros(respuesta.total)).bold().fontSize(8).end).colSpan(2).end
+          new Cell(new Txt('Percepciones en Depósito:').fontSize(8).end).end,
+          new Cell(new Txt('$' + this.generales.milesNumeros(totalPercepcionesDeposito.toString())).fontSize(8).end).alignment('right').end,
+        ],
+        [
+          new Cell(new Txt('Deducciones en Efectivo:').fontSize(8).end).end,
+          new Cell(new Txt('$' + this.generales.milesNumeros(totalDeduccionesEfectivo.toString())).fontSize(8).end).alignment('right').end,
+        ],
+        [
+          new Cell(new Txt('Deducciones en Depósito:').fontSize(8).end).end,
+          new Cell(new Txt('$' + this.generales.milesNumeros(totalDeduccionesDeposito.toString())).fontSize(8).end).alignment('right').end,
+        ],
+        [
+          new Cell(new Txt('--------------------------------------------------').fontSize(8).color('gray').end).colSpan(2).end,
+          null
+        ],
+        [
+          new Cell(new Txt('Subtotal de la Nómina:').bold().fontSize(8).end).end,
+          new Cell(new Txt('$' + this.generales.milesNumeros(respuesta.total)).bold().fontSize(8).end).alignment('right').end,
         ]
-      ]).widths(['20%', '40%', '40%']).alignment('center').end
+      ]).widths(['70%', '30%']).layout('noBorders').end
 
       let tablaIntermedia = new Table([
-        [null, tablaTotales, null]
-      ]).widths(['33%', '34%', '33%']).layout('noBorders').end
+        [tablaTotales, null]
+      ]).widths(['50%', '50%']).layout('noBorders').end
       pdf.add(tablaIntermedia);
 
       pdf.add(pdf.ln(2));
