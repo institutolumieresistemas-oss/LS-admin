@@ -164,7 +164,7 @@ export class CuentaDatosComponent {
 
     this.cupones.canjear(body).subscribe((respuesta: any) => {
       let dato = {
-        idConcepto: 0,
+        idConcepto: 6,
         cantidad: '1',
         idTipo: 1,
         monto: respuesta.monto,
