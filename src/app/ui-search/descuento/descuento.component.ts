@@ -31,7 +31,8 @@ export class DescuentoComponent {
   force(){
     this.lista.forEach((element: any) => {
       if(element.id.toString() === this.dato.idConcepto.toString()){
-        this.forzar = true;
+        // Si element.forzar === 1 o verdadero, se bloquea (forzar = true), de lo contrario se queda libre (forzar = false)
+        this.forzar = element.forzar == 1 || element.forzar == true;
         this.dato.idTipo = element.tipo;
         this.dato.cantidad = element.monto;
         this.dato.idMonto = 2;
