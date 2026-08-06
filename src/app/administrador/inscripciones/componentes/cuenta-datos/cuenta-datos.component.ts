@@ -82,46 +82,52 @@ export class CuentaDatosComponent {
   }
 
   agregarAbono(dato: any): any{
-    dato.total = dato.monto;
+    dato.total = parseFloat(dato.monto);
     dato.id = this.cuenta.abonos.length + 1;
     dato.idConcepto = dato.idConcepto;
     if(!this.servicio.validarAbono(dato)){
       return 0;
     }
+    
+    let montoCalculado = parseFloat(dato.monto);
+
     if(dato.iva){
-      dato.monto = (this.agregarIVA(dato) + parseFloat(dato.monto));
+      let montoIva = (parseFloat(dato.total) * 16) / 100;
+      montoCalculado += montoIva;
+      this.agregarIVA(dato, montoIva);
     }
     if(dato.comision){
-      dato.monto = (this.agregarComision(dato) + parseFloat(dato.monto));
+      let montoComision = (parseInt(dato.formaComision) === 1) ? 
+        (parseFloat(dato.cantidadComision) * parseFloat(dato.total)) / 100 :
+        parseFloat(dato.cantidadComision);
+      montoCalculado += montoComision;
+      this.agregarComision(dato, montoComision);
     }
+
+    dato.monto = montoCalculado.toFixed(2);
     this.cuenta.abonos.push(dato);
     this.recargar(3);
     this.calcular();
   }
 
-  agregarIVA(dato: any){
+  agregarIVA(dato: any, montoIva: number){
     let iva = {
       idConcepto: 0,
-      monto: (parseFloat(dato.total) * 16) / 100,
+      monto: montoIva.toFixed(2),
       concepto: 'IVA ' + this.generales.nombre(this.listas.abonos, dato.idConcepto),
       id: this.cuenta.cargos.length + 1
     }
-    this.cuenta.cargos.push(iva)
-    return iva.monto;
+    this.cuenta.cargos.push(iva);
   }
 
-  agregarComision(dato: any){
+  agregarComision(dato: any, montoComision: number){
     let comision = {
       idConcepto: 0,
       concepto: 'Comision por pago ' + this.generales.nombre(this.listas.abonos, dato.idConcepto),
-      monto: (parseInt(dato.formaComision) === 1) ? 
-      (parseFloat(dato.cantidadComision) * parseFloat(dato.total)) /100 :
-      parseFloat(dato.cantidadComision),
+      monto: montoComision.toFixed(2),
       id: this.cuenta.cargos.length + 1
     }
-
     this.cuenta.cargos.push(comision);
-    return comision.monto
   }
 
   quitarAbono(dato: any){

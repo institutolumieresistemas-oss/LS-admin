@@ -97,16 +97,66 @@ export class EstadoCuentaPrincipalComponent {
       dato.idNivel = this.cuenta.ficha.idNivel;
       dato.concepto = this.generales.busquedaIdentificador(this.listas.conceptosabonos, dato.idConcepto).nombre;
       dato.idConcepto = dato.idConcepto;
+      
+      let montoOriginal = parseFloat(dato.monto);
+      let montoCalculado = montoOriginal;
+      let cargosPendientes: Promise<any>[] = [];
+
+      if(dato.iva){
+        let montoIva = (montoOriginal * 16) / 100;
+        montoCalculado += montoIva;
+
+        // Registrar el cargo del IVA
+        let cargoIva = {
+          id: this.ficha,
+          idConcepto: 0, // Concepto de IVA dinámico
+          monto: montoIva.toFixed(2),
+          concepto: 'IVA ' + dato.concepto
+        };
+        cargosPendientes.push(this.servicio.agregarCargo(cargoIva).toPromise());
+      }
+
+      if(dato.comision){
+        let montoComision = (parseInt(dato.formaComision) === 1) ? 
+          (parseFloat(dato.cantidadComision) * montoOriginal) / 100 :
+          parseFloat(dato.cantidadComision);
+        montoCalculado += montoComision;
+
+        // Registrar el cargo de la comisión
+        let cargoComision = {
+          id: this.ficha,
+          idConcepto: 0,
+          monto: montoComision.toFixed(2),
+          concepto: 'Comision por pago ' + dato.concepto
+        };
+        cargosPendientes.push(this.servicio.agregarCargo(cargoComision).toPromise());
+      }
+
+      dato.monto = montoCalculado.toFixed(2);
       this.cargando = true;
-      this.servicio.agregarAbono(dato).subscribe((respuesta: any) => {
+
+      // Esperar a que se den de alta los cargos de IVA/Comisión, luego dar de alta el abono
+      Promise.all(cargosPendientes).then((respuestasCargos) => {
+        // Añadir los cargos creados al array local para actualizar la vista
+        respuestasCargos.forEach(cargoCreado => {
+          if (cargoCreado) {
+            this.cuenta.cargos = this.generales.agregarDatoArray(this.cuenta.cargos, cargoCreado);
+          }
+        });
+
+        this.servicio.agregarAbono(dato).subscribe((respuesta: any) => {
+          this.cargando = false;
+          this.generales.mensajeCorrecto('Abono agregado correctamente');
+          this.cuenta.abonos = this.generales.agregarDatoArray(this.cuenta.abonos, respuesta);
+          this.calcular();
+        },
+        error => {
+          this.cargando = false;
+          this.generales.interpretarError(error);
+        });
+      }).catch(err => {
         this.cargando = false;
-        this.generales.mensajeCorrecto('Abono agregado correctamente');
-        this.cuenta.abonos = this.generales.agregarDatoArray(this.cuenta.abonos, respuesta);
-        this.calcular();
-      },
-      error => {
-        this.cargando = false;
-        this.generales.interpretarError(error);
+        this.generales.mensajeError('Error al crear los cargos asociados de IVA/Comisión');
       });
     }
   }
