@@ -3,13 +3,16 @@
         <app-select [obligatorio]="true" [etiqueta]="'Concepto'" [datos]="lista" [dato]="dato.idConcepto" (emitidor)="dato.idConcepto = $event; force();"></app-select>
     </div>
     <div class="col-sm-3">
+        <!-- disabled = forzar -->
         <app-input [activo]="forzar" [obligatorio]="true" [etiqueta]="'Cantidad'" [validacion]="'decimal'" [valor]="dato.cantidad" (emitidor)="dato.cantidad = $event;"></app-input>
     </div>
     <div class="col-sm-3">
+        <!-- des = forzar -->
         <app-select [des]="forzar" [obligatorio]="true" [etiqueta]="'Tipo de descuento'" [datos]="tipos" [dato]="dato.idTipo" (emitidor)="dato.idTipo = $event;"></app-select>
     </div>
     <div class="col-sm-3" *ngIf="dato.idTipo.toString() === '2'">
-        <app-select [obligatorio]="true" [etiqueta]="'Aplicar a'" [datos]="asignados" [dato]="dato.idMonto" (emitidor)="dato.idMonto = $event;"></app-select>
+        <!-- des = forzar -->
+        <app-select [des]="forzar" [obligatorio]="true" [etiqueta]="'Aplicar a'" [datos]="asignados" [dato]="dato.idMonto" (emitidor)="dato.idMonto = $event;"></app-select>
     </div>
 </div>
 <div class="row text-end">
