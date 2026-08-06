@@ -29,15 +29,20 @@ export class DescuentoPrincipalComponent {
     ngOnInit(){}
   
     force(){
-      this.lista.forEach((element: any) => {
-        if(element.id.toString() === this.dato.idConcepto.toString()){
-          this.forzar = true;
-          this.dato.idTipo = element.tipo;
-          this.dato.cantidad = element.monto;
-          this.dato.idMonto = 2;
-        }
-      });
-    }
+    console.log('Concepto seleccionado id (principal):', this.dato.idConcepto);
+    this.forzar = false; // Resetear siempre al inicio
+    
+    this.lista.forEach((element: any) => {
+      if(element.id.toString() === this.dato.idConcepto.toString()){
+        console.log('Elemento de descuento encontrado en la lista:', element);
+        // Si element.forzar === 1 o verdadero, se bloquea (forzar = true), de lo contrario se queda libre (forzar = false)
+        this.forzar = element.forzar == 1 || element.forzar == true;
+        this.dato.idTipo = element.tipo;
+        this.dato.cantidad = element.monto;
+        this.dato.idMonto = 2;
+      }
+    });
+  }
   
     emitir(){
       this.emitidor.emit(this.dato);
