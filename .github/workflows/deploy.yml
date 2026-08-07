@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - develop
 
 jobs:
   build-and-deploy:
@@ -23,8 +24,13 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
-      - name: Build production
+      - name: Build Producción
+        if: github.ref == 'refs/heads/main'
         run: npm run build:prod
+
+      - name: Build Pruebas
+        if: github.ref == 'refs/heads/develop'
+        run: npx ng build -c pruebas
 
       - name: Package dist files
         run: tar -czf dist.tar.gz -C dist/pedidos/browser .
@@ -39,7 +45,8 @@ jobs:
           source: "dist.tar.gz"
           target: "~/"
 
-      - name: Extract and deploy on server
+      - name: Deploy Producción en servidor
+        if: github.ref == 'refs/heads/main'
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -50,4 +57,18 @@ jobs:
             rm -rf ${{ secrets.SSH_TARGET_ADMIN }}/*
             tar -xzf ~/dist.tar.gz -C ${{ secrets.SSH_TARGET_ADMIN }}
             rm ~/dist.tar.gz
-            echo "Deploy completado exitosamente"
+            echo "✅ Deploy PRODUCCIÓN completado"
+
+      - name: Deploy Pruebas en servidor
+        if: github.ref == 'refs/heads/develop'
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 65002
+          script: |
+            rm -rf ${{ secrets.SSH_TARGET_ADMIN_DEV }}/*
+            tar -xzf ~/dist.tar.gz -C ${{ secrets.SSH_TARGET_ADMIN_DEV }}
+            rm ~/dist.tar.gz
+            echo "✅ Deploy PRUEBAS completado"
