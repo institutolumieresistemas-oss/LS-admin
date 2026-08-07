@@ -5,11 +5,11 @@ import { ReportesService } from '../../servicios/reportes.service';
 Chart.register(BarController, BarElement, PointElement, LinearScale, Title, CategoryScale);
 
 @Component({
-  selector: 'app-estadisticas',
-  templateUrl: './estadisticas.component.html',
-  styleUrl: './estadisticas.component.css'
+  selector: 'app-estadistica',
+  templateUrl: './estadistica.component.html',
+  styleUrl: './estadistica.component.css'
 })
-export class EstadisticasComponent {
+export class EstadisticaComponent {
   etiqueta = '';
   datos: any;
   sucursales: any;

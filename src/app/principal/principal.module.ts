@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { EstadisticaComponent } from './estadistica/estadistica.component';
 import { UiSearchModule } from '../ui-search/ui-search.module';
 import { FichaComponent } from './ficha/ficha.component';
 import { DatosFichaPrincipalComponent } from './ficha/componentes/datos-ficha-principal/datos-ficha-principal.component';
@@ -48,7 +48,7 @@ import { AlumnoCodigoComponent } from './alumno-codigo/alumno-codigo.component';
 
 @NgModule({
   declarations: [
-    EstadisticasComponent,
+    EstadisticaComponent,
     FichaComponent,
     DatosFichaPrincipalComponent,
     EstadoCuentaPrincipalComponent,

@@ -85,7 +85,7 @@ import { ReservacionAulasComponent } from '../gerentes/reservacion-aulas/reserva
 import { WebConfiguracionComponent } from '../web/web-configuracion/web-configuracion.component';
 import { ComisionesEmpleadoComponent } from '../ventas/comisiones-empleado/comisiones-empleado.component';
 import { ComisionesGeneralesComponent } from '../ventas/comisiones-generales/comisiones-generales.component';
-import { EstadisticasComponent } from '../principal/estadisticas/estadisticas.component';
+import { EstadisticaComponent } from '../principal/estadistica/estadistica.component';
 import { ComisionesCursosComponent } from '../ventas/comisiones-cursos/comisiones-cursos.component';
 import { MetasIngresosVentasComponent } from '../ventas/metas-ingresos-ventas/metas-ingresos-ventas.component';
 import { MetasCategoriasVentasComponent } from '../ventas/metas-categorias-ventas/metas-categorias-ventas.component';
@@ -137,7 +137,7 @@ import { BalanceCalendariosComponent } from '../auditorias/balance-calendarios/b
 
 const routes: Routes = [
   {path: '', canActivate: [auntenticacionGuard], component: InicioComponent, children: [
-    { path: '', canActivate: [auntenticacionGuard], component: EstadisticasComponent },
+    { path: '', canActivate: [auntenticacionGuard], component: EstadisticaComponent },
     { path: 'bancos', canActivate: [auntenticacionGuard], component: BancosComponent },
     { path: 'calendarios', canActivate: [auntenticacionGuard], component: CalendariosComponent },
     { path: 'campanias', canActivate: [auntenticacionGuard], component: CampaniasComponent },
