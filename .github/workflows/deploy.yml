@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - develop
 
 jobs:
   build-and-deploy:
@@ -24,29 +23,33 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
+      # 1. Compilar y empaquetar PRODUCCIÓN
       - name: Build Producción
-        if: github.ref == 'refs/heads/main'
         run: npm run build:prod
 
+      - name: Package Producción dist
+        run: tar -czf dist_prod.tar.gz -C dist/pedidos/browser .
+
+      # 2. Compilar y empaquetar PRUEBAS
       - name: Build Pruebas
-        if: github.ref == 'refs/heads/develop'
         run: npx ng build -c pruebas
 
-      - name: Package dist files
-        run: tar -czf dist.tar.gz -C dist/pedidos/browser .
+      - name: Package Pruebas dist
+        run: tar -czf dist_pruebas.tar.gz -C dist/pedidos/browser .
 
-      - name: Upload archive to server
+      # 3. Subir ambos paquetes al servidor
+      - name: Upload archives to server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 65002
-          source: "dist.tar.gz"
+          source: "dist_prod.tar.gz,dist_pruebas.tar.gz"
           target: "~/"
 
+      # 4. Desplegar en el servidor
       - name: Deploy Producción en servidor
-        if: github.ref == 'refs/heads/main'
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -54,13 +57,13 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 65002
           script: |
+            echo "🚀 Desplegando en PRODUCCIÓN (admin)..."
             rm -rf ${{ secrets.SSH_TARGET_ADMIN }}/*
-            tar -xzf ~/dist.tar.gz -C ${{ secrets.SSH_TARGET_ADMIN }}
-            rm ~/dist.tar.gz
+            tar -xzf ~/dist_prod.tar.gz -C ${{ secrets.SSH_TARGET_ADMIN }}
+            rm ~/dist_prod.tar.gz
             echo "✅ Deploy PRODUCCIÓN completado"
 
       - name: Deploy Pruebas en servidor
-        if: github.ref == 'refs/heads/develop'
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -68,7 +71,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 65002
           script: |
+            echo "🚀 Desplegando en PRUEBAS (pruebas)..."
             rm -rf ${{ secrets.SSH_TARGET_ADMIN_DEV }}/*
-            tar -xzf ~/dist.tar.gz -C ${{ secrets.SSH_TARGET_ADMIN_DEV }}
-            rm ~/dist.tar.gz
+            tar -xzf ~/dist_pruebas.tar.gz -C ${{ secrets.SSH_TARGET_ADMIN_DEV }}
+            rm ~/dist_pruebas.tar.gz
             echo "✅ Deploy PRUEBAS completado"
