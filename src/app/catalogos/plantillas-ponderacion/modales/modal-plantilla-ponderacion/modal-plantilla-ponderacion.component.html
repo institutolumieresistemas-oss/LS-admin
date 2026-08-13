@@ -1,0 +1,100 @@
+<div class="card shadow-sm border-0">
+  <div class="card-header bg-lumiere text-white d-flex justify-content-between align-items-center">
+    <h5 class="mb-0 text-white">
+      <i class="fa fa-layer-group me-2"></i>
+      {{ plantilla ? 'Modificar Plantilla de Ponderación' : 'Nueva Plantilla de Ponderación' }}
+    </h5>
+  </div>
+  <div class="card-body p-4">
+    <form (ngSubmit)="guardar()">
+      <!-- Nombre de Plantilla -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">Nombre de la Plantilla <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" [(ngModel)]="nombre" name="nombre" placeholder="ej. Estructura Oficial PAA UDG (50/50)" required />
+      </div>
+
+      <!-- Descripción -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">Descripción</label>
+        <input type="text" class="form-control" [(ngModel)]="descripcion" name="descripcion" placeholder="ej. Área Verbal 50% y Área Matemática 50%" />
+      </div>
+
+      <!-- Sección de Asignación de Secciones y Porcentajes -->
+      <div class="border rounded p-3 mb-3 bg-light">
+        <h6 class="fw-bold mb-2 text-dark"><i class="fa fa-list-check me-1"></i> Asignar Secciones y Áreas a esta Plantilla</h6>
+        
+        <div class="row g-2 align-items-end mb-3">
+          <div class="col-md-4">
+            <label class="form-label small fw-bold">Sección</label>
+            <select class="form-select form-select-sm" [(ngModel)]="idSeccionNueva" name="idSeccionNueva">
+              <option [ngValue]="null" disabled>-- Elegir Sección --</option>
+              <option *ngFor="let sec of seccionesDisponibles" [value]="sec.id">{{ sec.nombre }}</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small fw-bold">Área / Bloque</label>
+            <select class="form-select form-select-sm" [(ngModel)]="areaNueva" name="areaNueva">
+              <option value="Verbal">Área Verbal</option>
+              <option value="Matemática">Área Matemática</option>
+              <option value="General">Área General</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label small fw-bold">% Área</label>
+            <input type="number" class="form-control form-control-sm" [(ngModel)]="porcentajeAreaNueva" name="porcentajeAreaNueva" min="1" max="100" />
+          </div>
+          <div class="col-md-2">
+            <label class="form-label small fw-bold">Preguntas</label>
+            <input type="number" class="form-control form-control-sm" [(ngModel)]="totalPreguntasNueva" name="totalPreguntasNueva" min="0" placeholder="ej. 45" />
+          </div>
+          <div class="col-md-1">
+            <button type="button" class="btn btn-sm btn-primary w-100" (click)="agregarSeccion()" title="Agregar Sección">
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tabla de Secciones Agregadas -->
+        <div class="table-responsive" *ngIf="seccionesPlantilla.length > 0">
+          <table class="table table-sm table-bordered bg-white mb-0">
+            <thead class="table-dark">
+              <tr>
+                <th>Sección</th>
+                <th>Área / Bloque</th>
+                <th class="text-center">% Área</th>
+                <th class="text-center">Total Preguntas</th>
+                <th class="text-center" style="width: 50px;">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let s of seccionesPlantilla; let i = index">
+                <td><strong>{{ s.seccionNombre }}</strong></td>
+                <td><span class="badge bg-secondary">{{ s.area }}</span></td>
+                <td class="text-center">{{ s.porcentajeArea }}%</td>
+                <td class="text-center">{{ s.totalPreguntas }}</td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-sm btn-danger py-0 px-2" (click)="eliminarSeccion(i)">
+                    <i class="fa fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="seccionesPlantilla.length === 0" class="text-muted small text-center py-2">
+          No has agregado secciones a esta plantilla.
+        </div>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="d-flex justify-content-end gap-2 mt-4 pt-2 border-top">
+        <button type="button" class="btn btn-secondary px-4" (click)="cerrar()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn btn-success px-4" [disabled]="!nombre || seccionesPlantilla.length === 0">
+          <i class="fa fa-save me-1"></i> Guardar Plantilla
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

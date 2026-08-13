@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { BancosComponent } from './bancos/bancos.component';
 import { ModalBancoComponent } from './bancos/modales/modal-banco/modal-banco.component';
 import { UiSearchModule } from '../ui-search/ui-search.module';
@@ -94,8 +95,8 @@ import { ViasPublicitariasComponent } from './vias-publicitarias/vias-publicitar
 import { ModalViaPublicitariaComponent } from './vias-publicitarias/modales/modal-via-publicitaria/modal-via-publicitaria.component';
 import { PrestadoresComponent } from './prestadores/prestadores.component';
 import { ModalPrestadorComponent } from './prestadores/modales/modal-prestador/modal-prestador.component';
-
-
+import { PlantillasPonderacionComponent } from './plantillas-ponderacion/plantillas-ponderacion.component';
+import { ModalPlantillaPonderacionComponent } from './plantillas-ponderacion/modales/modal-plantilla-ponderacion/modal-plantilla-ponderacion.component';
 
 @NgModule({
   declarations: [
@@ -191,10 +192,13 @@ import { ModalPrestadorComponent } from './prestadores/modales/modal-prestador/m
     ViasPublicitariasComponent,
     ModalViaPublicitariaComponent,
     PrestadoresComponent,
-    ModalPrestadorComponent
+    ModalPrestadorComponent,
+    PlantillasPonderacionComponent,
+    ModalPlantillaPonderacionComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
     UiSearchModule
   ]
 })

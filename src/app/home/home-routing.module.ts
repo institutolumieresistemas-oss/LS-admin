@@ -124,6 +124,7 @@ import { BalanceCuentasComponent } from '../auditorias/balance-cuentas/balance-c
 import { AuditarComponent } from '../auditorias/auditar/auditar.component';
 import { ReporteVentasComponent } from '../reportes/reporte-ventas/reporte-ventas.component';
 import { PrestadoresComponent } from '../catalogos/prestadores/prestadores.component';
+import { PlantillasPonderacionComponent } from '../catalogos/plantillas-ponderacion/plantillas-ponderacion.component';
 import { CreditosComponent } from '../directivos/creditos/creditos.component';
 import { CreditoComponent } from '../principal/credito/credito.component';
 import { PrestamosComponent } from '../recursos-humanos/prestamos/prestamos.component';
@@ -183,6 +184,7 @@ const routes: Routes = [
     { path: 'tipoUsuario', canActivate: [auntenticacionGuard], component: TiposUsuariosComponent },
     { path: 'tiposIngreso', canActivate: [auntenticacionGuard], component: TiposIngresosComponent },
     { path: 'viasPublicitarias', canActivate: [auntenticacionGuard], component: ViasPublicitariasComponent },
+    { path: 'plantillasPonderacion', canActivate: [auntenticacionGuard], component: PlantillasPonderacionComponent },
     { path: 'modulos', canActivate: [auntenticacionGuard], component: ModulosComponent },
     { path: 'paginas', canActivate: [auntenticacionGuard], component: PaginasComponent },
     { path: 'altaCursos', canActivate: [auntenticacionGuard], component: AltaCursosComponent },
