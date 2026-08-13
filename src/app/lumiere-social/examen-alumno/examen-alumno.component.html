@@ -1,0 +1,147 @@
+<!-- Header Pegajoso Fijo -->
+<div class="sticky-header bg-dark text-white p-2 shadow-sm">
+  <div class="container-fluid d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center gap-2">
+      <span class="badge bg-primary fs-6"><i class="fa fa-clock me-1"></i> {{ tiempoFormateado }}</span>
+      <span class="fw-bold d-none d-md-inline ms-2">{{ seccionActual?.nombre }}</span>
+    </div>
+
+    <!-- Paginador de Preguntas -->
+    <div class="d-flex align-items-center gap-1 overflow-auto px-2" style="max-width: 50vw;">
+      <button 
+        *ngFor="let p of preguntas; let i = index" 
+        class="btn btn-sm paginador-item px-2 py-1"
+        [ngClass]="{
+          'btn-primary': respuestas[p.id]?.contestada,
+          'btn-warning text-dark fw-bold border-2': i === preguntaActivaIndex,
+          'btn-outline-light': !respuestas[p.id]?.contestada && i !== preguntaActivaIndex
+        }"
+        (click)="seleccionarPreguntaIndex(i)">
+        {{ p.numero }}
+      </button>
+    </div>
+
+    <div>
+      <button class="btn btn-sm btn-danger fw-bold" (click)="modalFinalizarAbierto = true">
+        <i class="fa fa-flag-checkered me-1"></i> Finalizar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Selector Pestañas Móvil (<768px) -->
+<div class="d-md-none bg-secondary p-2 d-flex justify-content-center gap-2">
+  <button class="btn btn-sm w-50" [ngClass]="vistaMovil === 'pregunta' ? 'btn-light fw-bold' : 'btn-outline-light'" (click)="vistaMovil = 'pregunta'">
+    <i class="fa fa-question-circle me-1"></i> Pregunta {{ preguntaActual?.numero }}
+  </button>
+  <button class="btn btn-sm w-50" [ngClass]="vistaMovil === 'lectura' ? 'btn-light fw-bold' : 'btn-outline-light'" (click)="vistaMovil = 'lectura'" [disabled]="!lecturaActual">
+    <i class="fa fa-book-open me-1"></i> Ver Lectura
+  </button>
+</div>
+
+<!-- Contenedor Principal (Side-by-Side en PC / Pestañas en Móvil) -->
+<div class="container-fluid py-3">
+  <div class="row g-3">
+    <!-- Columna Izquierda: Lectura o Imagen -->
+    <div class="col-md-6" [ngClass]="{'d-none d-md-block': vistaMovil !== 'lectura'}" *ngIf="lecturaActual">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-header bg-primary text-white">
+          <h6 class="mb-0 text-white"><i class="fa fa-book-open me-2"></i> {{ lecturaActual.titulo }}</h6>
+        </div>
+        <div class="card-body panel-lectura p-4">
+          <div *ngFor="let p of lecturaActual.parrafos" [id]="'parrafo-' + p.num" class="mb-3 p-2 rounded parrafo-item">
+            <span class="badge bg-secondary me-2">[{{ p.num }}]</span>
+            <span>{{ p.texto }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna Derecha: Pregunta y Opciones -->
+    <div class="col-md-6" [ngClass]="{'d-none d-md-block': vistaMovil !== 'pregunta' && lecturaActual, 'col-md-12': !lecturaActual}">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+          <span class="badge bg-info text-dark fs-6">Pregunta #{{ preguntaActual?.numero }}</span>
+          <button *ngIf="preguntaActual?.parrafoReferencia" class="btn btn-sm btn-warning" (click)="irAParrafoReferencia(preguntaActual.parrafoReferencia)">
+            <i class="fa fa-location-arrow me-1"></i> Ir al Párrafo {{ preguntaActual.parrafoReferencia }}
+          </button>
+        </div>
+
+        <div class="card-body p-4">
+          <h5 class="fw-bold mb-4">{{ preguntaActual?.texto }}</h5>
+
+          <!-- Opción Múltiple -->
+          <div *ngIf="preguntaActual?.opciones" class="d-flex flex-column gap-3 mb-4">
+            <div 
+              *ngFor="let op of preguntaActual.opciones" 
+              class="opcion-card p-3 rounded border cursor-pointer d-flex align-items-center justify-content-between"
+              [ngClass]="{
+                'opcion-seleccionada': respuestas[preguntaActual.id]?.opcionSeleccionada === op
+              }"
+              (click)="seleccionarOpcion(op)">
+              <span>{{ op }}</span>
+              <i class="fa fa-check-circle fs-5 text-success" *ngIf="respuestas[preguntaActual.id]?.opcionSeleccionada === op"></i>
+            </div>
+          </div>
+
+          <!-- Pregunta Abierta Matemática -->
+          <div *ngIf="preguntaActual?.tipo === 'abierta'" class="mb-4">
+            <label class="form-label fw-bold">Escribe tu respuesta matemática (ej. 5 o 1/2):</label>
+            <input 
+              type="text" 
+              class="form-control form-control-lg text-center fw-bold fs-4" 
+              placeholder="ej. 0.5" 
+              [(ngModel)]="respuestas[preguntaActual.id] ? respuestas[preguntaActual.id].respuestaAbierta : ''"
+              (ngModelChange)="seleccionarOpcion($event)" />
+          </div>
+
+          <!-- Botón de Confirmación Explícita -->
+          <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+            <button class="btn btn-outline-secondary" (click)="seleccionarPreguntaIndex(preguntaActivaIndex - 1)" [disabled]="preguntaActivaIndex === 0">
+              <i class="fa fa-arrow-left me-1"></i> Anterior
+            </button>
+            <button class="btn btn-success btn-lg px-4" (click)="guardarYContinuar()">
+              <i class="fa fa-save me-1"></i> Guardar y Siguiente <i class="fa fa-arrow-right ms-1"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Confirmación y Resumen -->
+<div class="modal fade show d-block bg-dark bg-opacity-75" *ngIf="modalFinalizarAbierto">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg">
+      <div class="modal-header bg-warning text-dark">
+        <h5 class="modal-title fw-bold"><i class="fa fa-exclamation-triangle me-2"></i> Confirmación de Finalización</h5>
+        <button type="button" class="btn-close" (click)="modalFinalizarAbierto = false"></button>
+      </div>
+      <div class="modal-body p-4">
+        <p class="fs-6">¿Estás seguro de que deseas finalizar la <strong>{{ seccionActual?.nombre }}</strong>?</p>
+        <div class="border rounded p-3 bg-light mb-3">
+          <div class="d-flex justify-content-between mb-2">
+            <span>Preguntas Respondidas:</span>
+            <span class="badge bg-success fs-6">{{ resumenPreguntasContestadas }} / {{ preguntas.length }}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Preguntas sin Contestar (en blanco):</span>
+            <span class="badge bg-danger fs-6">{{ resumenPreguntasPendientes }}</span>
+          </div>
+        </div>
+        <div class="alert alert-warning small mb-0" *ngIf="resumenPreguntasPendientes > 0">
+          <i class="fa fa-info-circle me-1"></i> Tienes <strong>{{ resumenPreguntasPendientes }} preguntas en blanco</strong>. Puedes regresar para responderlas antes de enviar.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalFinalizarAbierto = false">
+          <i class="fa fa-arrow-left me-1"></i> Regresar al Examen
+        </button>
+        <button type="button" class="btn btn-success" (click)="siguienteSeccionOFinalizar()">
+          <i class="fa fa-check me-1"></i> Confirmar y Enviar a SIGA
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -108,6 +108,7 @@ import { CitasComponent } from '../principal/citas/citas.component';
 import { MetasEconomicasComponent } from '../ventas/metas-economicas/metas-economicas.component';
 import { CalificadorComponent } from '../lumiere-social/calificador/calificador.component';
 import { CalificarGrupoComponent } from '../lumiere-social/calificar-grupo/calificar-grupo.component';
+import { ExamenAlumnoComponent } from '../lumiere-social/examen-alumno/examen-alumno.component';
 import { MetasEconomicasVendedorComponent } from '../ventas/metas-economicas-vendedor/metas-economicas-vendedor.component';
 import { MetaEconomicaComponent } from '../ventas/meta-economica/meta-economica.component';
 import { SeccionesComponent } from '../aplicacion/secciones/secciones.component';
@@ -240,6 +241,7 @@ const routes: Routes = [
     { path: 'crm', canActivate: [auntenticacionGuard], component: CRMComponent },
     { path: 'citas', canActivate: [auntenticacionGuard], component: CitasComponent },
     { path: 'calificador', canActivate: [auntenticacionGuard], component: CalificadorComponent },
+    { path: 'examenAlumno/:idFicha/:idExamen', canActivate: [auntenticacionGuard], component: ExamenAlumnoComponent },
     { path: 'metasEconomicas', canActivate: [auntenticacionGuard], component: MetasEconomicasComponent },
     { path: 'metaEconomicaVendedor', canActivate: [auntenticacionGuard], component: MetasEconomicasVendedorComponent },
     { path: 'metaEconomica', canActivate: [auntenticacionGuard], component: MetaEconomicaComponent },
