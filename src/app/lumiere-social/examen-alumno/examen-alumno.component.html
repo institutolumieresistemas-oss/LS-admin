@@ -12,9 +12,9 @@
         *ngFor="let p of preguntas; let i = index" 
         class="btn btn-sm paginador-item px-2 py-1"
         [ngClass]="{
-          'btn-primary': respuestas[p.id]?.contestada,
+          'btn-primary': estaContestada(p.id),
           'btn-warning text-dark fw-bold border-2': i === preguntaActivaIndex,
-          'btn-outline-light': !respuestas[p.id]?.contestada && i !== preguntaActivaIndex
+          'btn-outline-light': !estaContestada(p.id) && i !== preguntaActivaIndex
         }"
         (click)="seleccionarPreguntaIndex(i)">
         {{ p.numero }}
@@ -76,11 +76,11 @@
               *ngFor="let op of preguntaActual.opciones" 
               class="opcion-card p-3 rounded border cursor-pointer d-flex align-items-center justify-content-between"
               [ngClass]="{
-                'opcion-seleccionada': respuestas[preguntaActual.id]?.opcionSeleccionada === op
+                'opcion-seleccionada': isOpcionSeleccionada(preguntaActual.id, op)
               }"
               (click)="seleccionarOpcion(op)">
               <span>{{ op }}</span>
-              <i class="fa fa-check-circle fs-5 text-success" *ngIf="respuestas[preguntaActual.id]?.opcionSeleccionada === op"></i>
+              <i class="fa fa-check-circle fs-5 text-success" *ngIf="isOpcionSeleccionada(preguntaActual.id, op)"></i>
             </div>
           </div>
 
@@ -91,8 +91,7 @@
               type="text" 
               class="form-control form-control-lg text-center fw-bold fs-4" 
               placeholder="ej. 0.5" 
-              [(ngModel)]="respuestas[preguntaActual.id] ? respuestas[preguntaActual.id].respuestaAbierta : ''"
-              (ngModelChange)="seleccionarOpcion($event)" />
+              [(ngModel)]="respuestaAbiertaActual" />
           </div>
 
           <!-- Botón de Confirmación Explícita -->

@@ -140,6 +140,29 @@ export class ExamenAlumnoComponent implements OnInit, OnDestroy {
     this.preguntaActual = this.preguntas[index];
   }
 
+  estaContestada(id: number): boolean {
+    return !!(this.respuestas && this.respuestas[id] && this.respuestas[id].contestada);
+  }
+
+  isOpcionSeleccionada(id: number, op: string): boolean {
+    return !!(this.respuestas && this.respuestas[id] && this.respuestas[id].opcionSeleccionada === op);
+  }
+
+  get respuestaAbiertaActual(): string {
+    if (!this.preguntaActual) return '';
+    const id = this.preguntaActual.id;
+    return (this.respuestas[id] && this.respuestas[id].respuestaAbierta) ? this.respuestas[id].respuestaAbierta! : '';
+  }
+
+  set respuestaAbiertaActual(val: string) {
+    if (!this.preguntaActual) return;
+    const id = this.preguntaActual.id;
+    if (!this.respuestas[id]) {
+      this.respuestas[id] = { contestada: false };
+    }
+    this.respuestas[id].respuestaAbierta = val;
+  }
+
   seleccionarOpcion(opcion: string) {
     const id = this.preguntaActual.id;
     if (!this.respuestas[id]) {
