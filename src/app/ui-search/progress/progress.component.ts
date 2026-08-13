@@ -25,7 +25,7 @@ export class ProgressComponent {
   constructor(private generales: GeneralesService){}
 
   ngOnInit(): void {
-    console.log(this.cantidad);
+    
     this.calcular();
     this.verificarTipo();
   }

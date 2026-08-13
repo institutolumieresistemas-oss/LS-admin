@@ -37,12 +37,7 @@ export class NominaDesgolceComponent {
   ngOnInit(): void {
     this.traerPercepciones();
     this.calcular();
-    console.log(this.percepciones)
-  }
-
-  traerPercepciones(){
-    if(this.idDepartamento.toString() !== '1'){
-      let percepciones = this.generales.sublista(this.nominas, this.idEmpleado, 'idEmpleado');
+    
       percepciones.forEach(percepcion => {
         percepcion.id = this.dato.percepciones.length + 1;
         this.dato.percepciones.push(percepcion);

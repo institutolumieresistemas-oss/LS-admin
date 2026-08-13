@@ -24,7 +24,7 @@ export class ModalConfiguracionBannerComponent {
       this.listaImagenes = respuesta;
     },
     error => {
-      console.log(error);
+      
       this.generales.interpretarError(error);
     });
   }

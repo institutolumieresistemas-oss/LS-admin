@@ -15,7 +15,7 @@ export class EmpleadoDomicilioComponent {
   constructor(private generales: GeneralesService) { }
   
   ngOnInit(): void {
-    console.log(this.listas);
+    
     (this.modificar) ? this.buscarMunicipios() : null;
   }
 

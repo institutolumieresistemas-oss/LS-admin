@@ -50,7 +50,7 @@ export class AbonoComponent {
   }
 
   emitir(){
-    console.log(this.dato);
+    
     this.emitidor.emit(this.dato);
   }
 }

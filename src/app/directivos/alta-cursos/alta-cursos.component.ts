@@ -53,7 +53,7 @@ export class AltaCursosComponent {
   }
 
   buscar(){
-    console.log(this.listas.altas);
+    
     this.datos = this.generales.sublistaMultiples(this.listas.altas, this.busqueda);
   }
   

@@ -24,7 +24,7 @@ export class ModalCalificarAlumnoComponent implements OnInit {
               private calificador: CalificadorService) { }
 
   ngOnInit(): void {
-    console.log(this.ficha);
+    
     this.traerExamenes();
   }
 

@@ -56,7 +56,7 @@ export class ModalPreguntasQuizComponent {
         .split('|P)')
         .map(b => b.trim())
         .filter(b => b);
-        console.log(bloques);
+        
     
       const preguntas: Pregunta[] = [];
     

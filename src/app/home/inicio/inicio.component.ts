@@ -53,7 +53,7 @@ export class InicioComponent {
   }
 
   menu(){
-    console.log('Menu');
+    
     this.abierto = menuEstatus();
     (this.abierto) ? ocultarMenu() : mostrarMenu();
   }

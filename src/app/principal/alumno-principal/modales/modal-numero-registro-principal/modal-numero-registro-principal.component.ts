@@ -17,7 +17,7 @@ export class ModalNumeroRegistroPrincipalComponent {
   constructor(private generales: GeneralesService, private servicio: AlumnosService) { }
   
   ngOnInit(): void {
-    console.log(this.dato);
+    
   }
   
   emitir() {

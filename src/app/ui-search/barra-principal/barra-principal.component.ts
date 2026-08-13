@@ -13,7 +13,7 @@ export class BarraPrincipalComponent {
 
   menu(){
     this.abierto = menuEstatus();
-    console.log(this.abierto);
+    
     (this.abierto) ? ocultarMenu() : mostrarMenu();
   }
 }

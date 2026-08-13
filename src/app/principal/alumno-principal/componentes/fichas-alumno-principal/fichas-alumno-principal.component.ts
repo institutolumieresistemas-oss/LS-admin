@@ -129,7 +129,7 @@ export class FichasAlumnoPrincipalComponent {
   }
 
   abrirFicha(dato: any){
-    console.log(dato);
+    
     this.router.navigate(['admin/ficha', dato.id]);
   }
 

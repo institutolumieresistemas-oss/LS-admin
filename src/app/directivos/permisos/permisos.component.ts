@@ -87,7 +87,7 @@ export class PermisosComponent {
       this.generales.mensajeCorrecto('Permiso activado correctamente');
     },
     error => {
-      console.log(error);
+      
       this.cargando = false;
       this.generales.interpretarError(error);
     });

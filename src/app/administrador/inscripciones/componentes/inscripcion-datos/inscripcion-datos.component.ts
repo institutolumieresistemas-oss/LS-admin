@@ -78,7 +78,7 @@ export class InscripcionDatosComponent {
       this.traerGrupo();
       this.traerCupo();
     }
-    console.log();
+    
   }
 
   emitirAnterior(){

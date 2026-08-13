@@ -287,7 +287,7 @@ export class EstadoCuentaPrincipalComponent {
 
   calcular(){
     this.total = 0;
-    console.log(this.cuenta);
+    
     this.cuenta.cargos.forEach((cargo) => {
       this.total = this.total + parseFloat(cargo.monto);
     });

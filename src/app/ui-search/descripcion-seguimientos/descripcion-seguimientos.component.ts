@@ -14,7 +14,7 @@ export class DescripcionSeguimientosComponent implements OnInit {
   constructor(private eRef: ElementRef) { }
 
   ngOnInit(): void { 
-    console.log(this.descripcion);
+    
   }
 
   toggleDropdown(event: MouseEvent): void {

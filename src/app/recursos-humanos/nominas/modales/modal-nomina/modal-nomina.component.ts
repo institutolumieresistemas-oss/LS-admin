@@ -50,7 +50,7 @@ export class ModalNominaComponent {
   ngOnInit(): void {
     this.generales.delay(2000).then(fun => {
       this.dato.empleado.idCalendario = Number(localStorage.getItem('calendario') ?? 0);
-      console.log(this.dato.empleado.idCalendario);
+      
     });
   }
   

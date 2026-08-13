@@ -21,7 +21,7 @@ export class ModalTraspasoComponent {
   
   ngOnInit(): void {
     this.dato.idFormaPago = (this.cuenta.efectivo) ? 1 : this.dato.idFormaPago;
-    console.log(this.dato);
+    
   }
   
   emitir() {

@@ -33,7 +33,7 @@ export class ModalConfiguracionCursosComponent {
 
   buscar(){
     this.listaCursos = this.generales.sublistaMultiples(this.listas.altas, this.busqueda);
-    console.log(this.listaCursos);
+    
   }
 
   mostrar(){

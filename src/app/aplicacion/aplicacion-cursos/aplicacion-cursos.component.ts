@@ -60,7 +60,7 @@ export class AplicacionCursosComponent {
     },
     error => {
       this.cargando = false;
-      console.log(error);
+      
       this.generales.interpretarError(error);
     });
   }
