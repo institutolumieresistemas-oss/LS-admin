@@ -25,8 +25,23 @@ export class UsuariosService {
     return this.http.post(url, {usuario}, {headers: this.headers}).pipe( map(respuesta => respuesta) );
   }
 
-  modificarPassword(body: any) {
-    const url = this.uri + 'modificarPassword';
+  traer(body: any) {
+    const url = this.uri + 'traer';
+    return this.http.post(url, body, {headers: this.headers}).pipe( map(respuesta => respuesta) );
+  }
+
+  modificar(usuario: any) {
+    const url = this.uri + 'modificar';
+    return this.http.post(url, usuario, {headers: this.headers}).pipe( map(respuesta => respuesta) );
+  }
+
+  verificarDisponibilidad(body: any) {
+    const url = this.uri + 'verificarDisponibilidad';
+    return this.http.post(url, body, {headers: this.headers}).pipe( map(respuesta => respuesta) );
+  }
+
+  sugerirUsuario(body: any) {
+    const url = this.uri + 'sugerirUsuario';
     return this.http.post(url, body, {headers: this.headers}).pipe( map(respuesta => respuesta) );
   }
 }

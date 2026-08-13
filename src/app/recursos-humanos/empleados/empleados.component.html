@@ -23,6 +23,7 @@
 <app-botones *ngIf="seleccion !== undefined">
     <button class="btn btn-success" (click)="modal('nuevo');">Agregar Empleado</button>
     <button class="btn btn-yellow" (click)="modal('modificar');">Modificar Empleado</button>
+    <button class="btn btn-primary" (click)="modal('usuario')"><i class="fa fa-user-lock me-1"></i> Usuario / Accesos</button>
     <button class="btn btn-danger" *ngIf="!seleccion.activo" (click)="activar();">Activar Empleado</button>
     <button class="btn btn-success" *ngIf="seleccion.activo" (click)="desactivar();">Desactivar Empleado</button>
     <button class="btn btn-danger" (click)="eliminar();">Eliminar Empleado</button>
@@ -31,4 +32,5 @@
 <app-modal [ngSwitch]="vista">
     <app-modal-empleado *ngSwitchCase="'nuevo'" [listas]="listas" (emitidor)="nuevo($event);"></app-modal-empleado>
     <app-modal-sucursales-empleado *ngSwitchCase="'sucursales'" [usuario]="seleccion"></app-modal-sucursales-empleado>
+    <app-modal-usuario-empleado *ngSwitchCase="'usuario'" [empleado]="seleccion"></app-modal-usuario-empleado>
 </app-modal>

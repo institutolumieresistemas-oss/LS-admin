@@ -1,0 +1,100 @@
+<div class="card shadow-sm border-0">
+  <div class="card-header bg-lumiere text-white d-flex justify-content-between align-items-center">
+    <h5 class="mb-0 text-white">
+      <i class="fa fa-user-lock me-2"></i>
+      {{ esNuevoUsuario ? 'Asignar Usuario a Empleado' : 'Gestión de Usuario y Accesos' }}
+    </h5>
+  </div>
+  <div class="card-body p-4">
+    <div class="alert alert-info py-2 mb-3" *ngIf="empleado">
+      <i class="fa fa-user-circle me-2"></i>
+      Empleado: <strong>{{ empleado.nombre }} {{ empleado.apellidoPaterno || '' }}</strong>
+    </div>
+
+    <!-- Cargando spinner -->
+    <div *ngIf="cargando" class="text-center py-4">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="mt-2 text-muted small">Procesando información de usuario...</p>
+    </div>
+
+    <form *ngIf="!cargando" (ngSubmit)="guardar()">
+      <!-- Campo Usuario -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">
+          Nombre de Usuario <span class="text-danger">*</span>
+        </label>
+        <div class="input-group">
+          <span class="input-group-text bg-light"><i class="fa fa-at"></i></span>
+          <input 
+            type="text" 
+            class="form-control" 
+            [(ngModel)]="username" 
+            name="username"
+            [disabled]="!esNuevoUsuario" 
+            (input)="verificarUnicidad()"
+            placeholder="ej. nombre.apellido"
+            required
+          />
+        </div>
+
+        <!-- Alerta de validación de unicidad -->
+        <div class="mt-1 small" [ngClass]="{'text-success': disponible && esNuevoUsuario, 'text-danger': !disponible && esNuevoUsuario, 'text-muted': !esNuevoUsuario}">
+          {{ mensajeValidacion }}
+        </div>
+      </div>
+
+      <!-- Campo Contraseña -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">
+          Contraseña {{ esNuevoUsuario ? '*' : '(Opcional para cambiar)' }}
+        </label>
+        <div class="input-group">
+          <span class="input-group-text bg-light"><i class="fa fa-key"></i></span>
+          <input 
+            type="password" 
+            class="form-control" 
+            [(ngModel)]="password" 
+            name="password"
+            [placeholder]="esNuevoUsuario ? 'Ingresa la contraseña de acceso' : 'Deja en blanco para conservar la contraseña actual'"
+            [required]="esNuevoUsuario"
+          />
+        </div>
+        <div class="form-text text-muted" *ngIf="!esNuevoUsuario">
+          Escribe una nueva contraseña solo si deseas restablecerla.
+        </div>
+      </div>
+
+      <!-- Campo Tipo de Usuario / Rol (Catálogo) -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">
+          Tipo de Usuario / Rol <span class="text-danger">*</span>
+        </label>
+        <select class="form-select" [(ngModel)]="idTipoUsuario" name="idTipoUsuario" required>
+          <option [ngValue]="null" disabled>-- Selecciona Tipo de Usuario --</option>
+          <option *ngFor="let tipo of tiposUsuarios" [value]="tipo.id">
+            {{ tipo.nombre }}
+          </option>
+        </select>
+        <div class="form-text text-muted">
+          Determina los permisos y accesos del empleado en el sistema.
+        </div>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="d-flex justify-content-end gap-2 mt-4 pt-2 border-top">
+        <button type="button" class="btn btn-secondary px-4" (click)="cerrar()">
+          Cancelar
+        </button>
+        <button 
+          type="submit" 
+          class="btn btn-success px-4" 
+          [disabled]="esNuevoUsuario && (!disponible || !username || !password || !idTipoUsuario)"
+        >
+          <i class="fa fa-save me-1"></i> {{ esNuevoUsuario ? 'Crear Usuario' : 'Guardar Cambios' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
