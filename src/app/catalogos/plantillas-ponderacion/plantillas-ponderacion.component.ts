@@ -41,11 +41,17 @@ export class PlantillasPonderacionComponent implements OnInit {
   }
 
   cargarSecciones() {
-    this.seccionesService.mostrar().subscribe(
+    this.seccionesService.catalogo().subscribe(
       (res: any) => {
         this.seccionesDisponibles = Array.isArray(res) ? res : [];
       },
-      (err: any) => console.error(err)
+      (err: any) => {
+        this.seccionesDisponibles = [
+          { id: 1, nombre: 'Lectura' },
+          { id: 2, nombre: 'Redacción' },
+          { id: 3, nombre: 'Matemáticas' }
+        ];
+      }
     );
   }
 

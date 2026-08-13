@@ -20,6 +20,15 @@ export class AplicacionSeccionesService {
     return this.http.get(url, {headers: this.headers}).pipe( map(respuesta => respuesta) );
   }
   
+  catalogo() {
+    const url = environment.url + 'secciones/catalogo';
+    const authHeaders = new HttpHeaders({
+      'Content-Type' : 'application/json',
+      Authorization : 'bearer ' + localStorage.getItem('token')
+    });
+    return this.http.get(url, {headers: authHeaders}).pipe( map(respuesta => respuesta) );
+  }
+  
   nuevo(body: any) {
     const url = this.uri + 'nuevo';
     return this.http.post(url, body, {headers: this.headers}).pipe( map(respuesta => respuesta) );
