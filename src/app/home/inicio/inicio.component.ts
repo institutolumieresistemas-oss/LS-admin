@@ -32,8 +32,8 @@ export class InicioComponent {
       localStorage.setItem('foto', respuesta.usuario.foto);
       localStorage.setItem('identificador', respuesta.usuario.id);
       localStorage.setItem('nombre', respuesta.usuario.nombre);
-      localStorage.setItem('calendario', respuesta.usuario.calendario.calendario);
-      localStorage.setItem('ncalendario', respuesta.usuario.calendario.ncalendario);
+      localStorage.setItem('calendario', respuesta.usuario.calendario ? respuesta.usuario.calendario.calendario : '');
+      localStorage.setItem('ncalendario', respuesta.usuario.calendario ? respuesta.usuario.calendario.ncalendario : '');
       
       this.menus = respuesta.permisos;
       this.sucursales = respuesta.sucursales;
