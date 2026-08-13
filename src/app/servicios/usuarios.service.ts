@@ -44,4 +44,9 @@ export class UsuariosService {
     const url = this.uri + 'sugerirUsuario';
     return this.http.post(url, body, {headers: this.headers}).pipe( map(respuesta => respuesta) );
   }
+
+  modificarPassword(body: any) {
+    const url = this.uri + 'modificarPassword';
+    return this.http.post(url, body, {headers: this.headers}).pipe( map(respuesta => respuesta) );
+  }
 }

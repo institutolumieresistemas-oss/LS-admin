@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { UiSearchModule } from '../ui-search/ui-search.module';
 import { EmpleadosComponent } from './empleados/empleados.component';
 import { ModalEmpleadoComponent } from './empleados/modales/modal-empleado/modal-empleado.component';
@@ -43,6 +44,7 @@ import { ModalAbonosPrestamosComponent } from './prestamos/modales/modal-abonos/
   ],
   imports: [
     CommonModule,
+    FormsModule,
     UiSearchModule
   ],
   exports: [

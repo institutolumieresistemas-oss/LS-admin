@@ -35,7 +35,7 @@ export class PerfilComponent {
       this.cargando = false;
       this.generales.mensajeCorrecto('Password actualizada correctamente');
     },
-    error => {
+    (error: any) => {
       this.cargando = false;
       this.generales.interpretarError(error);
     });
