@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { datatableConfig } from '../../interfaces/tables.interface';
 import { GeneralesService } from '../../servicios/generales.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlumnosService } from '../../servicios/alumnos.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-busqueda-alumnos-principal',
@@ -21,19 +22,22 @@ export class BusquedaAlumnosPrincipalComponent {
   vista: any;
   busqueda: any;
   
-  constructor(private generales: GeneralesService,
-              private rutaActiva: ActivatedRoute,
-              private servicio: AlumnosService,
-              private router: Router
-            ){}
+  private generales = inject(GeneralesService);
+  private rutaActiva = inject(ActivatedRoute);
+  private servicio = inject(AlumnosService);
+  private router = inject(Router);
 
-  ngOnInit(){
-    this.buscar();
+  constructor(){
+    this.rutaActiva.params.pipe(takeUntilDestroyed()).subscribe((params: any) => {
+      if (params['alumno']) {
+        this.buscar(params['alumno']);
+      }
+    });
   }
 
-  buscar(){
+  buscar(termino: string){
     this.cargando = true;
-    this.servicio.buscar({busqueda: this.rutaActiva.snapshot.params['alumno']}).subscribe((respuesta: any) => {
+    this.servicio.buscar({ busqueda: termino }).subscribe((respuesta: any) => {
       this.cargando = false;
       this.datos = respuesta;
     },
