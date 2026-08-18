@@ -5,7 +5,7 @@
 <div class="modal-body">
     <div class="container">
         <app-nomina-empleado [listas]="listas" [dato]="dato.empleado" (emitidor)="dato.empleado = $event; accion = 2;" *ngIf="accion === 1"></app-nomina-empleado>
-        <app-nomina-desgolce [percepciones]="listas.conceptospercepciones" [deducciones]="listas.conceptosdeducciones" [nominas]="listas.nominas" [idEmpleado]="dato.empleado.idEmpleado" [idDepartamento]="dato.empleado.idDepartamento" *ngIf="accion === 2" (emitidor)="dato.desgloce = $event; emitir();"
+        <app-nomina-desgolce [dato]="dato.desgloce" [percepciones]="listas.conceptospercepciones" [deducciones]="listas.conceptosdeducciones" [nominas]="listas.nominas" [idEmpleado]="dato.empleado.idEmpleado" [idDepartamento]="dato.empleado.idDepartamento" *ngIf="accion === 2" (emitidor)="dato.desgloce = $event; emitir();"
             (atras)="accion = 1;"></app-nomina-desgolce>
     </div>
 </div>

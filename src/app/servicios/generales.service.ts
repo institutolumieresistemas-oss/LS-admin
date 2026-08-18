@@ -196,9 +196,17 @@ export class GeneralesService {
 
   eliminarDatoArray(arreglo: any, dato: any){
     let final: Array<any> = new Array<any>();
-    if(arreglo !== undefined){
+    if(arreglo !== undefined && arreglo !== null){
       arreglo.forEach((elemento: any) => {
-        (elemento.id.toString() === dato.id.toString()) ? null : final.push(elemento);
+        if (elemento === dato) {
+          return;
+        }
+        if (elemento && dato && elemento.id !== undefined && dato.id !== undefined && elemento.id !== null && dato.id !== null) {
+          if (elemento.id.toString() === dato.id.toString()) {
+            return;
+          }
+        }
+        final.push(elemento);
       });
     }
     return final;
@@ -206,10 +214,18 @@ export class GeneralesService {
 
   actualizarDatoArray(arreglo: any, dato: any){
     let final: Array<any> = new Array<any>();
-    if(arreglo !== undefined){
+    if(arreglo !== undefined && arreglo !== null){
       arreglo.forEach((elemento: any) => {
-        dato.seleccionado = true;
-        final.push((elemento.id.toString() === dato.id.toString()) ? dato : elemento);
+        let esElMismo = (elemento === dato);
+        if (!esElMismo && elemento && dato && elemento.id !== undefined && dato.id !== undefined && elemento.id !== null && dato.id !== null) {
+          esElMismo = (elemento.id.toString() === dato.id.toString());
+        }
+        if (esElMismo) {
+          dato.seleccionado = true;
+          final.push(dato);
+        } else {
+          final.push(elemento);
+        }
       });
     }
     return final;

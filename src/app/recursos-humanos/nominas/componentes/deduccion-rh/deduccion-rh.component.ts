@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { GeneralesService } from '../../../../servicios/generales.service';
 
 @Component({
@@ -6,34 +6,45 @@ import { GeneralesService } from '../../../../servicios/generales.service';
   templateUrl: './deduccion-rh.component.html',
   styleUrl: './deduccion-rh.component.css'
 })
-export class DeduccionRHComponent {
-  @Input() deduccion = {
+export class DeduccionRHComponent implements OnInit, OnChanges {
+  @Input() deduccion: any = {
     idConcepto: 0,
-    idFormaPago: 0,
-    cantidad: '',
+    idFormaPago: 1,
+    cantidad: '1',
     valorUnitario: '',
     monto: ''
-  }
+  };
   @Input() conceptos: any;
   @Input() idDepartamento: any;
-  @Input() modificar = false
+  @Input() modificar = false;
   @Output() emitidor = new EventEmitter();
   formas = [
     { id: 1, nombre: 'Efectivo' },
     { id: 4, nombre: 'Deposito' }
-  ]
+  ];
   lista: any;
   
   constructor(private generales: GeneralesService){}
 
   ngOnInit(){
+    this.cargarLista();
+  }
+
+  ngOnChanges(changes: SimpleChanges){
+    this.cargarLista();
+  }
+
+  cargarLista(){
+    if (!this.idDepartamento) return;
     this.lista = (this.idDepartamento.toString() === '1') ? 
-    this.lista = this.generales.sublista(this.conceptos, '1', 'docentes') :
-    this.lista = this.generales.sublista(this.conceptos, '2', 'docentes');
+      this.generales.sublista(this.conceptos, '1', 'docentes') :
+      this.generales.sublista(this.conceptos, '2', 'docentes');
   }
 
   emitir(){
-    this.deduccion.monto = (parseFloat(this.deduccion.valorUnitario) * parseFloat(this.deduccion.cantidad)).toFixed(2).toString();
+    const cant = parseFloat(this.deduccion.cantidad) || 1;
+    const val = parseFloat(this.deduccion.valorUnitario) || 0;
+    this.deduccion.monto = (val * cant).toFixed(2).toString();
     this.emitidor.emit(this.deduccion);
   }
 }

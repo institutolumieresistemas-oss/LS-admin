@@ -1,19 +1,19 @@
 <div class="row">
     <div class="col-sm-3">
-        <app-select [etiqueta]="'Concepto'" [datos]="lista" (emitidor)="deduccion.idConcepto = $event;"></app-select>
+        <app-select [etiqueta]="'Concepto'" [datos]="lista" [dato]="deduccion.idConcepto" (emitidor)="deduccion.idConcepto = $event;"></app-select>
+    </div>
+    <div class="col-sm-3" *ngIf="idDepartamento && idDepartamento.toString() !== '1'">
+        <app-select [etiqueta]="'Forma de pago'" [datos]="formas" [dato]="deduccion.idFormaPago" (emitidor)="deduccion.idFormaPago = $event;"></app-select>
+    </div>
+    <div class="col-sm-3" *ngIf="idDepartamento && idDepartamento.toString() === '1'">
+        <app-input [etiqueta]="'Cantidad'" [validacion]="'decimal'" [valor]="deduccion.cantidad" (emitidor)="deduccion.cantidad = $event;"></app-input>
     </div>
     <div class="col-sm-3">
-        <app-select [etiqueta]="'Forma de pago'" [datos]="formas" (emitidor)="deduccion.idFormaPago = $event;" *ngIf="idDepartamento.toString() !== '1'"></app-select>
-    </div>
-    <div class="col-sm-3">
-        <app-input [etiqueta]="'Cantidad'" [validacion]="'numero'" (emitidor)="deduccion.cantidad = $event;"></app-input>
-    </div>
-    <div class="col-sm-3">
-        <app-input [etiqueta]="'Valor Unitario'" [validacion]="'decimal'" (emitidor)="deduccion.valorUnitario = $event;"></app-input>
+        <app-input [etiqueta]="'Valor Unitario'" [validacion]="'decimal'" [valor]="deduccion.valorUnitario" (emitidor)="deduccion.valorUnitario = $event;"></app-input>
     </div>
 </div>
 <div class="row">
     <div class="col-sm-4">
-        <button class="btn btn-success" (click)="emitir();" *ngIf="!modificar">Guardar</button>
+        <button class="btn btn-success" (click)="emitir();">Guardar</button>
     </div>
 </div>
