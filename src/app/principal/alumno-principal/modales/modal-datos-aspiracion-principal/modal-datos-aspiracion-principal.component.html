@@ -6,10 +6,10 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-                <app-select [des]="true" [etiqueta]="'Universidad'" [datos]="listas.universidades" [dato]="dato.idUniversidad" (emitidor)="dato.idUniversidad = $event; traerCentros();"></app-select>
+                <app-select [etiqueta]="'Universidad'" [datos]="listas.universidades" [dato]="dato.idUniversidad" (emitidor)="dato.idUniversidad = $event; traerCentros();"></app-select>
             </div>
             <div class="col-sm-4">
-                <app-select [des]="true" [etiqueta]="'Centro universitario'" [datos]="centros" [dato]="dato.idCentroUniversitario" (emitidor)="dato.idCentroUniversitario = $event; traerCarreras();"></app-select>
+                <app-select [etiqueta]="'Centro universitario'" [datos]="centros" [dato]="dato.idCentroUniversitario" (emitidor)="dato.idCentroUniversitario = $event; traerCarreras();"></app-select>
             </div>
             <div class="col-sm-4">
                 <app-select [etiqueta]="'Carrera'" [datos]="carreras" [dato]="dato.idCarrera" (emitidor)="dato.idCarrera = $event;"></app-select>

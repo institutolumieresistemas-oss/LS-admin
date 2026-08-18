@@ -117,7 +117,7 @@ export class FichasAlumnoPrincipalComponent {
     this.cargando = true;
     this.servicio.actualizarDatosAspiracion(dato).subscribe((respuesta: any) => {
       this.cargando = false;
-      this.generales.mensajeCorrecto('Datos publicitarios actualizados correctamente');
+      this.generales.mensajeCorrecto('Datos de aspiración actualizados correctamente');
       this.generales.cerrarModal();
       this.mostrar();
       this.dato = undefined;

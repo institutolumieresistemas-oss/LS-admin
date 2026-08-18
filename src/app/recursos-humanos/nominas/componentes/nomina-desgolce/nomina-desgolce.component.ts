@@ -35,10 +35,9 @@ export class NominaDesgolceComponent {
   constructor(public generales: GeneralesService) { }
   
   ngOnInit(): void {
-    this.traerPercepciones();
     this.calcular();
-    
-      percepciones.forEach(percepcion => {
+    if (this.percepciones) {
+      this.percepciones.forEach((percepcion: any) => {
         percepcion.id = this.dato.percepciones.length + 1;
         this.dato.percepciones.push(percepcion);
       });
