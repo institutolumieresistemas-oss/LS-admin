@@ -22,7 +22,7 @@
         </div>
     </div>
 </div>
-<app-modal [ngSwitch]="ventana">
+<app-modal [ngSwitch]="ventana" *ngIf="ventana">
     <app-modal-inscripcion-principal [idAlumno]="dato.id" [codigos]="codigos" [grupos]="grupos" [cupos]="cupos" [listas]="listas" (emitidor)="inscripcion($event);" *ngSwitchCase="'inscripcion'"></app-modal-inscripcion-principal>
 </app-modal>
 <app-cargando *ngIf="cargando"></app-cargando>
