@@ -98,7 +98,9 @@ export class AlumnoPrincipalComponent {
     this.ventana = '';
     this.generales.delay(500).then(fun => {
       this.ventana = ventana;
-      this.generales.abrirModal();
+      setTimeout(() => {
+        this.generales.abrirModal();
+      }, 50);
     })
   }
 

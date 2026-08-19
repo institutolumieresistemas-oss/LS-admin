@@ -58,7 +58,9 @@ export class FichasAlumnoPrincipalComponent {
     this.vista = '';
     this.generales.delay(500).then(fun => {
       this.vista = vista;
-      this.generales.abrirModal();
+      setTimeout(() => {
+        this.generales.abrirModal();
+      }, 50);
     });
   }
 
