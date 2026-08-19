@@ -5,7 +5,7 @@
     </div>
 </div>
 <app-cargando *ngIf="cargando"></app-cargando>
-<app-modal [ngSwitch]="vista">
+<app-modal [ngSwitch]="vista" *ngIf="vista">
     <app-modal-numero-registro-principal *ngSwitchCase="'registro'" [dato]="dato" (emitidor)="registro($event);"></app-modal-numero-registro-principal>
     <app-modal-estatus-ficha-principal *ngSwitchCase="'estatus'" [dato]="dato" (emitidor)="estatus($event);"></app-modal-estatus-ficha-principal>
     <app-modal-datos-publicitarios-principal *ngSwitchCase="'publicitarios'" [datos]="dato.publicitarios" [listas]="listas.publicitarios" (emitidor)="publicitarios($event);"></app-modal-datos-publicitarios-principal>
