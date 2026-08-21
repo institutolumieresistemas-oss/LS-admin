@@ -20,6 +20,7 @@ import { ModalUsuarioEmpleadoComponent } from './empleados/modales/modal-usuario
 import { PrestamosComponent } from './prestamos/prestamos.component';
 import { ModalPrestamoComponent } from './prestamos/modales/modal-prestamo/modal-prestamo.component';
 import { ModalAbonosPrestamosComponent } from './prestamos/modales/modal-abonos/modal-abonos.component';
+import { VacacionesComponent } from './vacaciones/vacaciones.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ModalAbonosPrestamosComponent } from './prestamos/modales/modal-abonos/
     ModalUsuarioEmpleadoComponent,
     PrestamosComponent,
     ModalPrestamoComponent,
-    ModalAbonosPrestamosComponent
+    ModalAbonosPrestamosComponent,
+    VacacionesComponent
   ],
   imports: [
     CommonModule,

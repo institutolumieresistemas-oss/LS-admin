@@ -129,6 +129,7 @@ import { PlantillasPonderacionComponent } from '../catalogos/plantillas-ponderac
 import { CreditosComponent } from '../directivos/creditos/creditos.component';
 import { CreditoComponent } from '../principal/credito/credito.component';
 import { PrestamosComponent } from '../recursos-humanos/prestamos/prestamos.component';
+import { VacacionesComponent } from '../recursos-humanos/vacaciones/vacaciones.component';
 import { ReporteIngresosBasicoComponent } from '../reportes/reporte-ingresos-basico/reporte-ingresos-basico.component';
 import { ReporteEgresosBasicoComponent } from '../reportes/reporte-egresos-basico/reporte-egresos-basico.component';
 import { PrestamoComponent } from '../principal/prestamo/prestamo.component';
@@ -213,6 +214,7 @@ const routes: Routes = [
     { path: 'emisionTransferencias', canActivate: [auntenticacionGuard], component: TransferenciasComponent },
     { path: 'empleados', canActivate: [auntenticacionGuard], component: EmpleadosComponent },
     { path: 'nominasEmpleados', canActivate: [auntenticacionGuard], component: NominasComponent },
+    { path: 'vacaciones', canActivate: [auntenticacionGuard], component: VacacionesComponent },
     { path: 'inscripcionesVentas', canActivate: [auntenticacionGuard], component: InscripcionesVentasComponent },
     { path: 'aulas', canActivate: [auntenticacionGuard], component: AulasComponent },
     { path: 'balanceGerentes', canActivate: [auntenticacionGuard], component: BalanceGerentesComponent },

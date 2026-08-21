@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { datatableConfig } from '../../interfaces/tables.interface';
 import { GeneralesService } from '../../servicios/generales.service';
 import { EmpleadosService } from '../../servicios/empleados.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-empleados',
@@ -20,7 +21,11 @@ export class EmpleadosComponent {
   seleccion: any;
   vista: any;
   
-  constructor(private generales: GeneralesService, private servicio: EmpleadosService){}
+  constructor(private generales: GeneralesService, private servicio: EmpleadosService, private router: Router){}
+
+  irAVacaciones() {
+    this.router.navigate(['admin/vacaciones']);
+  }
   
   ngOnInit(): void {
     this.mostrar();

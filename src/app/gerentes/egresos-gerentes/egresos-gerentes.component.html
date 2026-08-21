@@ -44,5 +44,5 @@
     <app-modal-egreso-directivos *ngSwitchCase="'nuevo'" [listas]="listas" [modificar]="false" (emitidor)="nuevo($event);"></app-modal-egreso-directivos>
     <app-modal-egreso-directivos *ngSwitchCase="'modificar'" [listas]="listas" [modificar]="true" [dato]="seleccion" (emitidor)="modificar($event);"></app-modal-egreso-directivos>
     <app-modal-voucher-egresos-directivos *ngSwitchCase="'voucher'" (emitidor)="voucher($event);"></app-modal-voucher-egresos-directivos>
-    <img *ngSwitchCase="'imagen'" src="{{imagen}}" alt="">
+    <app-modal-ver-voucher *ngSwitchCase="'imagen'" [voucher]="imagen" [titulo]="'Voucher de Egreso'"></app-modal-ver-voucher>
 </app-modal>

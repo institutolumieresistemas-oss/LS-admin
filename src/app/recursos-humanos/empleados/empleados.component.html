@@ -9,6 +9,7 @@
             <div class="row" *ngIf="seleccion === undefined">
                 <div class="col-sm-12">
                     <button class="btn btn-success" (click)="modal('nuevo')">Agregar Empleado</button>
+                    <button class="btn btn-warning ms-2" (click)="irAVacaciones()"><i class="fas fa-umbrella-beach me-1"></i> Control de Vacaciones</button>
                 </div>
             </div>
             <div class="row">
@@ -24,6 +25,7 @@
     <button class="btn btn-success" (click)="modal('nuevo');">Agregar Empleado</button>
     <button class="btn btn-yellow" (click)="modal('modificar');">Modificar Empleado</button>
     <button class="btn btn-primary" (click)="modal('usuario')"><i class="fa fa-user-lock me-1"></i> Usuario / Accesos</button>
+    <button class="btn btn-secondary" (click)="irAVacaciones()">Vacaciones</button>
     <button class="btn btn-danger" *ngIf="!seleccion.activo" (click)="activar();">Activar Empleado</button>
     <button class="btn btn-success" *ngIf="seleccion.activo" (click)="desactivar();">Desactivar Empleado</button>
     <button class="btn btn-danger" (click)="eliminar();">Eliminar Empleado</button>

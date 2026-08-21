@@ -63,5 +63,5 @@
     <app-modal-ingreso-directivos *ngSwitchCase="'nuevo'" [modificar]="false" [listas]="listas" (emitidor)="nuevo($event);"></app-modal-ingreso-directivos>
     <app-modal-ingreso-directivos *ngSwitchCase="'modificar'" [modificar]="true" [listas]="listas" [dato]="seleccion" (emitidor)="modificar($event);"></app-modal-ingreso-directivos>
     <app-modal-voucher-directivos *ngSwitchCase="'voucher'" (emitidor)="voucher($event);"></app-modal-voucher-directivos>
-    <img src="{{imagen}}" alt="voucher" *ngSwitchCase="'imagen'">
+    <app-modal-ver-voucher *ngSwitchCase="'imagen'" [voucher]="imagen" [titulo]="'Voucher de Ingreso'"></app-modal-ver-voucher>
 </app-modal>

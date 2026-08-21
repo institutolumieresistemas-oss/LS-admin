@@ -41,5 +41,5 @@
 <app-modal [ngSwitch]="vista">
     <app-modal-financieros *ngSwitchCase="'financieros'" [dato]="seleccion" [bancos]="listas.bancos" [cuentas]="listas.cuentas" (emitidor)="financieros($event);"></app-modal-financieros>
     <app-modal-observaciones-ingreso *ngSwitchCase="'observaciones'" [dato]="seleccion" (emitidor)="observaciones($event);"></app-modal-observaciones-ingreso>
-    <img src="{{imagen}}" alt="" *ngSwitchCase="'voucher'">
+    <app-modal-ver-voucher *ngSwitchCase="'voucher'" [voucher]="imagen" [titulo]="'Voucher de Ingreso (Auditoría)'"></app-modal-ver-voucher>
 </app-modal>
