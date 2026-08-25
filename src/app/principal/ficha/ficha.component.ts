@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GeneralesService } from '../../servicios/generales.service';
 import { FichasService } from '../../servicios/fichas.service';
+import { InscripcionesService } from '../../servicios/inscripciones.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -35,6 +36,7 @@ export class FichaComponent implements OnInit {
   charge = false;
   constructor(public generales: GeneralesService,
               private fichas: FichasService,
+              private inscripciones: InscripcionesService,
               public rutaActiva: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -58,6 +60,9 @@ export class FichaComponent implements OnInit {
   }
 
   actualizar(dato: any) {
+    if (!this.inscripciones.validarInscripcion(dato)) {
+      return;
+    }
     dato.id = this.rutaActiva.snapshot.params['ficha'];
     this.cargando = true;
     this.fichas.actualizar(dato).subscribe((respuesta: any) => {
