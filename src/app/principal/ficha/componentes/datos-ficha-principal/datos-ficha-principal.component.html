@@ -60,6 +60,11 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-sm-4">
+            <app-input [obligatorio]="true" [etiqueta]="'Fecha de Inscripción'" [tipo]="'date'" [valor]="datos.fecha" (emitidor)="datos.fecha = $event;"></app-input>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-12">
             <button class="btn btn-success" (click)="emitirSiguiente();">Guardar</button>
         </div>

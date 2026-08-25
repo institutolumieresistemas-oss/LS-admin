@@ -21,6 +21,7 @@ export class DatosFichaPrincipalComponent {
     idSucursalImparticion: 0,
     idSucursalInscripcion: 0,
     observaciones: '',
+    fecha: '',
     idGrupo: 0,
     precio: ''
   }
@@ -60,6 +61,9 @@ export class DatosFichaPrincipalComponent {
   constructor(private generales: GeneralesService, private servicio: InscripcionesService){}
   
   ngOnInit(){
+    if (this.datos && this.datos.fecha) {
+      this.datos.fecha = this.datos.fecha.split(' ')[0];
+    }
     this.traerCalendarios();
     if(this.datos.idCalendario > 0){
       this.traerNiveles();
@@ -94,6 +98,7 @@ export class DatosFichaPrincipalComponent {
       idSucursalImparticion: (paso > 9) ? (paso === 10) ? dato : this.datos.idSucursalImparticion : 0,
       idSucursalInscripcion: (paso > 9) ? (paso === 10) ? dato : this.datos.idSucursalInscripcion : this.datos.idSucursalInscripcion,
       observaciones: this.datos.observaciones,
+      fecha: this.datos.fecha,
       idGrupo: (paso === 10) ? this.datos.idGrupo : 0,
       precio: (paso === 10) ? this.datos.precio : '',
     }
