@@ -1,0 +1,23 @@
+.avatar-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  background: #e7f1ff;
+}
+
+.bg-lumiere {
+  background-color: #0F2042 !important;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.card-header {
+  border-bottom: 1px solid #edf2f9;
+  font-size: 0.95rem;
+}

@@ -65,6 +65,7 @@ import { EgresosAdministrativosComponent } from '../administrador/egresos-admini
 import { EmisionValesComponent } from '../administrador/emision-vales/emision-vales.component';
 import { IngresosAdministrativosComponent } from '../administrador/ingresos-administrativos/ingresos-administrativos.component';
 import { InscripcionesComponent } from '../administrador/inscripciones/inscripciones.component';
+import { PreinscripcionesComponent } from '../administrador/preinscripciones/preinscripciones.component';
 import { TransferenciaSucursalesComponent } from '../administrador/transferencia-sucursales/transferencia-sucursales.component';
 import { ValesGerencialesComponent } from '../administrador/vales-gerenciales/vales-gerenciales.component';
 import { IngresosAuditoriasComponent } from '../auditorias/ingresos-auditorias/ingresos-auditorias.component';
@@ -208,6 +209,7 @@ const routes: Routes = [
     { path: 'emisionVales', canActivate: [auntenticacionGuard], component: EmisionValesComponent},
     { path: 'ingresosAdministrativos', canActivate: [auntenticacionGuard], component: IngresosAdministrativosComponent},
     { path: 'inscripciones', canActivate: [auntenticacionGuard], component: InscripcionesComponent},
+    { path: 'preinscripciones', canActivate: [auntenticacionGuard], component: PreinscripcionesComponent},
     { path: 'recepcionTransferencias', canActivate: [auntenticacionGuard], component: TransferenciaSucursalesComponent},
     { path: 'valeGerencial', canActivate: [auntenticacionGuard], component: ValesGerencialesComponent},
     { path: 'auditoriasIngresos', canActivate: [auntenticacionGuard], component: IngresosAuditoriasComponent},

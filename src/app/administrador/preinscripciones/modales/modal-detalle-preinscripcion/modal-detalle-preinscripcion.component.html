@@ -1,0 +1,175 @@
+<div class="modal-header bg-lumiere text-white">
+  <div class="d-flex align-items-center justify-content-between w-100">
+    <div class="d-flex align-items-center gap-2">
+      <i class="fas fa-id-card fa-lg text-warning mr-2"></i>
+      <h4 class="modal-title text-white mb-0">Detalle de Preinscripción #{{ preinscripcion?.id }}</h4>
+    </div>
+    <span class="badge bg-warning text-dark font-weight-bold mr-3">{{ preinscripcion?.created_at | date:'dd/MM/yyyy HH:mm' }}</span>
+    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" (click)="emitirCerrar()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
+
+<div class="modal-body p-4 bg-light" *ngIf="preinscripcion">
+  <!-- Summary Banner -->
+  <div class="card border-0 shadow-sm mb-4 rounded-3">
+    <div class="card-body p-3 bg-white">
+      <div class="row align-items-center">
+        <div class="col-md-7">
+          <div class="d-flex align-items-center gap-3">
+            <div class="avatar-circle bg-primary-subtle text-primary font-weight-bold mr-3">
+              {{ (datos.nombreAlumno?.substring(0,1) || 'A') + (datos.apellidoPaterno?.substring(0,1) || 'L') }}
+            </div>
+            <div>
+              <h5 class="mb-1 font-weight-bold text-dark">
+                {{ datos.nombreAlumno }} {{ datos.apellidoPaterno }} {{ datos.apellidoMaterno }}
+              </h5>
+              <div class="d-flex flex-wrap gap-2 text-muted small">
+                <span class="mr-3"><i class="fas fa-envelope text-primary mr-1"></i> {{ datos.correo }}</span>
+                <span class="mr-3"><i class="fab fa-whatsapp text-success mr-1"></i> {{ datos.celularAlumno }}</span>
+                <span *ngIf="datos.fechaNacimiento"><i class="fas fa-calendar-alt text-secondary mr-1"></i> {{ datos.fechaNacimiento }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 text-md-right mt-3 mt-md-0">
+          <span class="badge bg-primary text-white p-2 font-weight-normal mr-2" style="font-size: 0.85rem;">
+            <i class="fas fa-school mr-1"></i> Plantel: <strong>{{ datos.plantelEleccion || 'No especificado' }}</strong>
+          </span>
+          <a *ngIf="datos.celularAlumno" [href]="'https://wa.me/52' + datos.celularAlumno" target="_blank" class="btn btn-sm btn-success text-white font-weight-bold mt-1">
+            <i class="fab fa-whatsapp mr-1"></i> WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- 1. Domicilio -->
+    <div class="col-md-6 mb-3">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-header bg-white font-weight-bold text-primary d-flex align-items-center">
+          <i class="fas fa-map-marker-alt mr-2 text-danger"></i> Domicilio del Alumno
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-6 mb-2">
+              <span class="text-muted small d-block">Calle y Número:</span>
+              <strong class="text-dark">{{ datos.calle || 'N/A' }} {{ datos.numero }}</strong>
+            </div>
+            <div class="col-6 mb-2">
+              <span class="text-muted small d-block">Colonia:</span>
+              <strong class="text-dark">{{ datos.colonia || 'N/A' }}</strong>
+            </div>
+            <div class="col-6 mb-2">
+              <span class="text-muted small d-block">Código Postal:</span>
+              <strong class="text-dark">{{ datos.codigoPostal || 'N/A' }}</strong>
+            </div>
+            <div class="col-6 mb-2">
+              <span class="text-muted small d-block">Municipio y Estado:</span>
+              <strong class="text-dark">{{ datos.municipioAlumno || 'N/A' }}, {{ datos.estadoAlumno || 'N/A' }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Tutor -->
+    <div class="col-md-6 mb-3">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-header bg-white font-weight-bold text-primary d-flex align-items-center">
+          <i class="fas fa-user-friends mr-2 text-info"></i> Datos del Padre o Tutor
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 mb-2">
+              <span class="text-muted small d-block">Nombre del Tutor:</span>
+              <strong class="text-dark">{{ datos.padreTutor || 'No especificado' }}</strong>
+            </div>
+            <div class="col-12 mb-2">
+              <span class="text-muted small d-block">Celular / Teléfono Tutor:</span>
+              <strong class="text-dark">{{ datos.celularPadreTutor || 'No especificado' }}</strong>
+              <a *ngIf="datos.celularPadreTutor" [href]="'https://wa.me/52' + datos.celularPadreTutor" target="_blank" class="ml-2 btn btn-xs btn-outline-success py-0 px-2" style="font-size: 0.75rem;">
+                <i class="fab fa-whatsapp"></i> Chat
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Escolares y Aspiración -->
+    <div class="col-md-6 mb-3">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-header bg-white font-weight-bold text-primary d-flex align-items-center">
+          <i class="fas fa-graduation-cap mr-2 text-success"></i> Procedencia y Aspiración
+        </div>
+        <div class="card-body">
+          <div class="mb-2">
+            <span class="text-muted small d-block">Escuela de Procedencia:</span>
+            <strong class="text-dark">{{ datos.escuelaProcedencia || 'N/A' }}</strong>
+          </div>
+          <div class="row mb-2">
+            <div class="col-6">
+              <span class="text-muted small d-block">Ubicación Escuela:</span>
+              <strong class="text-dark">{{ datos.ciudadEscuela || 'N/A' }}, {{ datos.estadoEscuela }}</strong>
+            </div>
+            <div class="col-6">
+              <span class="text-muted small d-block">Promedio:</span>
+              <span class="badge bg-info text-white font-weight-bold px-2 py-1">{{ datos.promedio || 'N/A' }}</span>
+            </div>
+          </div>
+          <hr class="my-2">
+          <div class="mb-1">
+            <span class="text-muted small d-block">Centro de Aspiración:</span>
+            <strong class="text-primary">{{ datos.centroAspiracion || 'No especificado' }}</strong>
+          </div>
+          <div>
+            <span class="text-muted small d-block">Carrera de Aspiración:</span>
+            <strong class="text-dark">{{ datos.carrera || 'No especificada' }}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Encuesta y Preguntas -->
+    <div class="col-md-6 mb-3">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-header bg-white font-weight-bold text-primary d-flex align-items-center">
+          <i class="fas fa-poll mr-2 text-warning"></i> Respuestas de Preinscripción
+        </div>
+        <div class="card-body">
+          <div class="mb-2">
+            <span class="text-muted small d-block">Intentos de examen de admisión:</span>
+            <strong class="text-dark">{{ datos.vecesExamen || 'No respondido' }}</strong>
+          </div>
+          <div class="mb-2">
+            <span class="text-muted small d-block">¿Ha tomado curso de preparación previo?:</span>
+            <span [ngClass]="datos.tomadoCursoPrep === 'Sí' ? 'badge bg-warning text-dark' : 'badge bg-secondary text-white'">
+              {{ datos.tomadoCursoPrep || 'No' }}
+            </span>
+            <span *ngIf="datos.tomadoCursoPrep === 'Sí' && datos.dondeCursoPrep" class="ml-2 text-muted small">
+              en <strong>{{ datos.dondeCursoPrep }}</strong>
+            </span>
+          </div>
+          <div class="mb-1">
+            <span class="text-muted small d-block">¿Cómo se enteró de nosotros?:</span>
+            <span class="badge bg-light text-dark border font-weight-normal px-2 py-1">
+              {{ datos.comoEnteraste || 'No especificado' }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer bg-white border-top d-flex justify-content-between">
+  <button type="button" class="btn btn-secondary px-4" data-dismiss="modal" (click)="emitirCerrar()">
+    Cerrar
+  </button>
+  <button type="button" class="btn btn-success px-4 font-weight-bold shadow-sm" (click)="emitirInscribir()">
+    <i class="fas fa-user-plus mr-1"></i> Inscribir Alumno Oficialmente
+  </button>
+</div>

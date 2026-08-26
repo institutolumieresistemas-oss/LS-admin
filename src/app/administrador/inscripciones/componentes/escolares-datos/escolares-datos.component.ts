@@ -40,8 +40,14 @@ export class EscolaresDatosComponent {
   ngOnInit(){
     if(this.datos.idTipoEscuela > 0){
       this.traerEscuelas(true);
+    }
+    if(this.datos.idEstado > 0){
       this.traerMunicipios(true);
+    }
+    if(this.datos.idUniversidad > 0){
       this.traerCentros(true);
+    }
+    if(this.datos.idCentroUniversitario > 0){
       this.traerCarreras(true);
     }
   }

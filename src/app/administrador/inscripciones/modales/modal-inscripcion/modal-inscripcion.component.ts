@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, Output, EventEmitter, Input, SimpleChange, SimpleChanges } from '@angular/core';
 import { GeneralesService } from '../../../../servicios/generales.service';
 import { InscripcionesService } from '../../../../servicios/inscripciones.service';
 import swal from'sweetalert2';
@@ -8,7 +8,7 @@ import swal from'sweetalert2';
   templateUrl: './modal-inscripcion.component.html',
   styleUrl: './modal-inscripcion.component.css'
 })
-export class ModalInscripcionComponent {
+export class ModalInscripcionComponent implements OnInit, OnChanges {
   @Input() listas = {
     alumnos: {
       sexos: []
@@ -149,6 +149,14 @@ export class ModalInscripcionComponent {
   constructor(private servicio: InscripcionesService) { }
   
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['ficha']) {
+      this.paso = 1;
+      this.ultimoPasoDisponible = 1;
+      this.asignarTexto();
+    }
   }
 
   cambiarPaso(paso: number): void {

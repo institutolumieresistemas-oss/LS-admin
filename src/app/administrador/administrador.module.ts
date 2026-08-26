@@ -21,46 +21,49 @@ import { CuentaDatosComponent } from './inscripciones/componentes/cuenta-datos/c
 import { TransferenciaSucursalesComponent } from './transferencia-sucursales/transferencia-sucursales.component';
 import { ValesGerencialesComponent } from './vales-gerenciales/vales-gerenciales.component';
 import { ModalValeGerencialComponent } from './vales-gerenciales/modales/modal-vale-gerencial/modal-vale-gerencial.component';
-
-
+import { PreinscripcionesComponent } from './preinscripciones/preinscripciones.component';
+import { ModalDetallePreinscripcionComponent } from './preinscripciones/modales/modal-detalle-preinscripcion/modal-detalle-preinscripcion.component';
 
 @NgModule({
   declarations: [
-  
     CobroNominasComponent,
-       CorteCajaComponent,
-       CursosCongeladosComponent,
-       EgresosAdministrativosComponent,
-       EmisionValesComponent,
-       ModalValeAdministrativosComponent,
-       IngresosAdministrativosComponent,
-       InscripcionesComponent,
-       ModalInscripcionComponent,
-       AlumnoDatosComponent,
-       InscripcionDatosComponent,
-       DomicilioDatosComponent,
-       TutorDatosComponent,
-       EscolaresDatosComponent,
-       PublicitariosDatosComponent,
-       CuentaDatosComponent,
-       TransferenciaSucursalesComponent,
-       ValesGerencialesComponent,
-       ModalValeGerencialComponent
+    CorteCajaComponent,
+    CursosCongeladosComponent,
+    EgresosAdministrativosComponent,
+    EmisionValesComponent,
+    ModalValeAdministrativosComponent,
+    IngresosAdministrativosComponent,
+    InscripcionesComponent,
+    ModalInscripcionComponent,
+    AlumnoDatosComponent,
+    InscripcionDatosComponent,
+    DomicilioDatosComponent,
+    TutorDatosComponent,
+    EscolaresDatosComponent,
+    PublicitariosDatosComponent,
+    CuentaDatosComponent,
+    TransferenciaSucursalesComponent,
+    ValesGerencialesComponent,
+    ModalValeGerencialComponent,
+    PreinscripcionesComponent,
+    ModalDetallePreinscripcionComponent
   ],
   imports: [
     CommonModule,
     UiSearchModule,
     DirectivosModule
-],
-exports: [
-  AlumnoDatosComponent,
-  CuentaDatosComponent,
-  DomicilioDatosComponent,
-  EscolaresDatosComponent,
-  InscripcionDatosComponent,
-  PublicitariosDatosComponent,
-  TutorDatosComponent,
-  ModalInscripcionComponent
-]  
+  ],
+  exports: [
+    AlumnoDatosComponent,
+    CuentaDatosComponent,
+    DomicilioDatosComponent,
+    EscolaresDatosComponent,
+    InscripcionDatosComponent,
+    PublicitariosDatosComponent,
+    TutorDatosComponent,
+    ModalInscripcionComponent,
+    PreinscripcionesComponent,
+    ModalDetallePreinscripcionComponent
+  ]  
 })
 export class AdministradorModule { }
