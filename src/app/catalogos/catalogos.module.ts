@@ -97,6 +97,9 @@ import { PrestadoresComponent } from './prestadores/prestadores.component';
 import { ModalPrestadorComponent } from './prestadores/modales/modal-prestador/modal-prestador.component';
 import { PlantillasPonderacionComponent } from './plantillas-ponderacion/plantillas-ponderacion.component';
 import { ModalPlantillaPonderacionComponent } from './plantillas-ponderacion/modales/modal-plantilla-ponderacion/modal-plantilla-ponderacion.component';
+import { ReactivosComponent } from './reactivos/reactivos.component';
+import { ModalReactivoComponent } from './reactivos/modales/modal-reactivo/modal-reactivo.component';
+import { ModalAsociarSeccionesComponent } from './reactivos/modales/modal-asociar-secciones/modal-asociar-secciones.component';
 
 @NgModule({
   declarations: [
@@ -194,7 +197,10 @@ import { ModalPlantillaPonderacionComponent } from './plantillas-ponderacion/mod
     PrestadoresComponent,
     ModalPrestadorComponent,
     PlantillasPonderacionComponent,
-    ModalPlantillaPonderacionComponent
+    ModalPlantillaPonderacionComponent,
+    ReactivosComponent,
+    ModalReactivoComponent,
+    ModalAsociarSeccionesComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,34 @@
+<div class="card">
+    <div class="card-header pb-0 bg-lumiere">
+        <div class="d-flex align-items-center">
+            <h5 class="mb-1 text-white">Catálogo de Reactivos</h5>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="container">
+            <div class="row" *ngIf="seleccion === undefined">
+                <div class="col-sm-12">
+                    <button class="btn btn-success" (click)="modal('nuevo')">Agregar Reactivo</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <app-datatable [configuracion]="configuracion" [datos]="datos" (emitidor)="seleccion = $event;"></app-datatable>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-botones *ngIf="seleccion !== undefined" (emitidor)="seleccion = undefined">
+    <button class="btn btn-success" (click)="modal('nuevo');">Agregar Reactivo</button>
+    <button class="btn btn-yellow" (click)="modal('modificar');">Modificar Reactivo</button>
+    <button class="btn btn-info" (click)="modal('asociar');">Asociar Secciones</button>
+    <button class="btn btn-danger" (click)="eliminar();">Eliminar Reactivo</button>
+</app-botones>
+
+<app-modal [ngSwitch]="vista">
+    <app-modal-reactivo *ngSwitchCase="'nuevo'" [modificar]="false" (emitidor)="nuevo($event);"></app-modal-reactivo>
+    <app-modal-reactivo *ngSwitchCase="'modificar'" [modificar]="true" [dato]="seleccion" (emitidor)="modificar($event);"></app-modal-reactivo>
+    <app-modal-asociar-secciones *ngSwitchCase="'asociar'" [reactivo]="seleccion" (emitidor)="mostrar();"></app-modal-asociar-secciones>
+</app-modal>

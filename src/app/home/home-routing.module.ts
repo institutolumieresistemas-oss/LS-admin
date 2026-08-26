@@ -137,6 +137,7 @@ import { AlumnoCodigoComponent } from '../principal/alumno-codigo/alumno-codigo.
 import { CuentasCobrarComponent } from '../auditorias/cuentas-cobrar/cuentas-cobrar.component';
 import { CuentasPagarComponent } from '../auditorias/cuentas-pagar/cuentas-pagar.component';
 import { BalanceCalendariosComponent } from '../auditorias/balance-calendarios/balance-calendarios.component';
+import { ReactivosComponent } from '../catalogos/reactivos/reactivos.component';
 
 const routes: Routes = [
   {path: '', canActivate: [auntenticacionGuard], component: InicioComponent, children: [
@@ -187,6 +188,7 @@ const routes: Routes = [
     { path: 'tiposIngreso', canActivate: [auntenticacionGuard], component: TiposIngresosComponent },
     { path: 'viasPublicitarias', canActivate: [auntenticacionGuard], component: ViasPublicitariasComponent },
     { path: 'plantillasPonderacion', canActivate: [auntenticacionGuard], component: PlantillasPonderacionComponent },
+    { path: 'reactivos', canActivate: [auntenticacionGuard], component: ReactivosComponent },
     { path: 'modulos', canActivate: [auntenticacionGuard], component: ModulosComponent },
     { path: 'paginas', canActivate: [auntenticacionGuard], component: PaginasComponent },
     { path: 'altaCursos', canActivate: [auntenticacionGuard], component: AltaCursosComponent },

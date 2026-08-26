@@ -1,0 +1,30 @@
+<div class="modal-header bg-info">
+    <h4 class="text-white">Asociar Secciones a: {{ reactivo?.nombre }}</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+</div>
+<div class="modal-body">
+    <div class="container">
+        <p class="text-muted mb-3">Selecciona las secciones de examen que pertenecen a este reactivo. Recuerda que una sección solo puede pertenecer a un reactivo a la vez.</p>
+        
+        <div class="row">
+            <div class="col-sm-12" style="max-height: 300px; overflow-y: auto;">
+                <div class="form-check my-2" *ngFor="let sec of seccionesDisponibles">
+                    <input class="form-check-input" type="checkbox" [id]="'check-' + sec.id" [(ngModel)]="selecciones[sec.id]">
+                    <label class="form-check-label font-weight-bold" [for]="'check-' + sec.id">
+                        {{ sec.nombre }}
+                    </label>
+                </div>
+                <div *ngIf="seccionesDisponibles.length === 0" class="text-center text-muted my-3">
+                    No hay secciones disponibles configuradas en los exámenes.
+                </div>
+            </div>
+        </div>
+        
+        <div class="row justify-content-end mt-4">
+            <div class="col-sm-12 d-md-flex justify-content-md-end">
+                <button class="btn btn-success" (click)="guardar()">Guardar Cambios</button>
+                <button class="btn btn-danger" (click)="cerrar()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
