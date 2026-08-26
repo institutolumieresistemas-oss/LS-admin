@@ -8,15 +8,18 @@ import { GeneralesService } from '../../../../servicios/generales.service';
 })
 export class ModalReactivoComponent implements OnInit {
   @Output() emitidor = new EventEmitter<any>();
-  @Input() dato = {
+  @Input() dato: any = {
     nombre: '',
-    porcentaje: 50.00
+    porcentaje: ''
   };
   @Input() modificar = false;
 
   constructor(private generales: GeneralesService) { }
 
   ngOnInit(): void {
+    if (this.dato && this.dato.porcentaje !== undefined && this.dato.porcentaje !== null) {
+      this.dato.porcentaje = this.dato.porcentaje.toString();
+    }
   }
 
   emitir() {
