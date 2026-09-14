@@ -3,13 +3,13 @@
         <app-checktimes [activo]="datos.modificar" (emitidor)="datos.modificar= $event;" [texto]="'Padre o tutor'"></app-checktimes>
     </div>
     <div class="col-sm-3">
-        <app-input [etiqueta]="'Nombre'" [mayusculas]="true" [valor]="datos.nombre" [activo]="!datos.modificar" (emitidor)="datos.nombre = $event;"></app-input>
+        <app-input [obligatorio]="true" [etiqueta]="'Nombre'" [mayusculas]="true" [valor]="datos.nombre" [activo]="!datos.modificar" (emitidor)="datos.nombre = $event;"></app-input>
     </div>
     <div class="col-sm-3">
         <app-input [etiqueta]="'Telefono'" [validacion]="'numero'" [cantidad]="10" [valor]="datos.telefono" [activo]="!datos.modificar" (emitidor)="datos.telefono = $event;"></app-input>
     </div>
     <div class="col-sm-3">
-        <app-input [etiqueta]="'Celular'" [validacion]="'numero'" [cantidad]="10" [valor]="datos.celular" [activo]="!datos.modificar" (emitidor)="datos.celular = $event;"></app-input>
+        <app-input [obligatorio]="true" [etiqueta]="'Celular'" [validacion]="'numero'" [cantidad]="10" [valor]="datos.celular" [activo]="!datos.modificar" (emitidor)="datos.celular = $event;"></app-input>
     </div>
     <div class="col-sm-3"></div>
     <div class="col-sm-12 text-end" *ngIf="datos.modificar">

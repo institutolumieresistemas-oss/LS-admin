@@ -108,11 +108,11 @@ export class AlumnosService {
 
   validarTutor(dato: any){
     if(this.generales.validarString(dato.nombre)){
-      this.generales.mensajeError('No se ha ingresado el nombre');
+      this.generales.mensajeError('No se ha ingresado el nombre del tutor');
       return false;
     }
     if(this.generales.validarString(dato.celular)){
-      this.generales.mensajeError('No se ha ingresado el celular');
+      this.generales.mensajeError('No se ha ingresado el celular del tutor');
       return false;
     }
     return true;
