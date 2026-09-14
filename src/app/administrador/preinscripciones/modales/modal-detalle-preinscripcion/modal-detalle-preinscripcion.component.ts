@@ -21,4 +21,14 @@ export class ModalDetallePreinscripcionComponent {
   emitirCerrar() {
     this.cerrar.emit(true);
   }
+
+  formatearPromedio(promedio: any): string {
+    if (!promedio) return 'N/A';
+    const valStr = promedio.toString().trim().replace(',', '.');
+    let val = parseFloat(valStr);
+    if (isNaN(val) || val < 0) return promedio.toString();
+    if (val > 0 && val <= 10) val = val * 10;
+    if (val > 100) val = 100;
+    return val.toFixed(2);
+  }
 }

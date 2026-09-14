@@ -233,7 +233,19 @@ export class PreinscripcionesComponent implements OnInit {
     ficha.tutor.celular = d.celularPadreTutor || '';
 
     // 4. Escolares & Aspiración
-    ficha.escolares.promedio = d.promedio ? d.promedio.toString() : '';
+    if (d.promedio !== undefined && d.promedio !== null && d.promedio !== '') {
+      const valStr = d.promedio.toString().trim().replace(',', '.');
+      let val = parseFloat(valStr);
+      if (!isNaN(val) && val >= 0) {
+        if (val > 0 && val <= 10) val = val * 10;
+        if (val > 100) val = 100;
+        ficha.escolares.promedio = val.toFixed(2);
+      } else {
+        ficha.escolares.promedio = d.promedio.toString();
+      }
+    } else {
+      ficha.escolares.promedio = '';
+    }
     ficha.escolares.intentos = d.vecesExamen ? d.vecesExamen.toString() : '';
 
     const escObj = this.listas?.escolares?.escuelas?.find((e: any) =>
