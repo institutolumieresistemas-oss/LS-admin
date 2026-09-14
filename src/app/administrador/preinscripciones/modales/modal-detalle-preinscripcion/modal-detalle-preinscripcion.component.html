@@ -108,7 +108,11 @@
         <div class="card-body">
           <div class="mb-2">
             <span class="text-muted small d-block">Escuela de Procedencia:</span>
-            <strong class="text-dark">{{ datos.escuelaProcedencia || 'N/A' }}</strong>
+            <div class="d-flex align-items-center flex-wrap gap-2">
+              <strong class="text-dark">{{ datos.escuelaProcedencia || 'N/A' }}</strong>
+              <span *ngIf="datos.otraEscuela" class="text-primary font-weight-normal">({{ datos.otraEscuela }})</span>
+              <span *ngIf="datos.nivelProcedencia" class="badge bg-secondary text-white" style="font-size: 0.75rem;">{{ datos.nivelProcedencia }}</span>
+            </div>
           </div>
           <div class="row mb-2">
             <div class="col-6">
