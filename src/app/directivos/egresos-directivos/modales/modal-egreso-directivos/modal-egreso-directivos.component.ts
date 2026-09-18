@@ -51,8 +51,18 @@ export class ModalEgresoDirectivosComponent {
     this.dato.idTipo = (this.modificar) ? this.dato.idTipo : 0;
     this.tipos = this.generales.sublista(this.listas.tipos, this.dato.idRubro, 'idRubro');
   }
+
+  cambiarFormaPago(forma: any) {
+    this.dato.idFormaPago = forma;
+    if (forma?.toString() === '1' || forma === 1) {
+      this.dato.idCuenta = 0;
+    }
+  }
   
   emitir() {
+    if (this.dato.idFormaPago?.toString() === '1' || this.dato.idFormaPago === 1) {
+      this.dato.idCuenta = 0;
+    }
     this.emitidor.emit(this.dato);
   }
   

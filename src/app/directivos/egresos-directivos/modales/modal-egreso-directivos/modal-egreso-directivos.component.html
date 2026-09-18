@@ -21,7 +21,7 @@
                 <app-select [datos]="tipos" [dato]="dato.idTipo" [etiqueta]="'Tipo'" (emitidor)="dato.idTipo = $event;"></app-select>
             </div>
             <div class="col-sm-4">
-                <app-select [datos]="listas.formas" [dato]="dato.idFormaPago" [etiqueta]="'Forma de pago'" (emitidor)="dato.idFormaPago = $event;"></app-select>
+                <app-select [datos]="listas.formas" [dato]="dato.idFormaPago" [etiqueta]="'Forma de pago'" (emitidor)="cambiarFormaPago($event)"></app-select>
             </div>
             <div class="col-sm-4">
                 <app-select [datos]="listas.niveles" [dato]="dato.idNivel" [etiqueta]="'Niveles'" (emitidor)="dato.idNivel = $event;"></app-select>

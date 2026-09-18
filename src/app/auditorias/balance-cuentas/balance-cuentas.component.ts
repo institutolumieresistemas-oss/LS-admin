@@ -98,6 +98,22 @@ export class BalanceCuentasComponent {
         }
         nuevoItem[key] = val;
       });
+
+      if (!nuevoItem['fecha'] && item['created_at']) {
+        const d = new Date(item['created_at'] as string);
+        nuevoItem['fecha'] = !isNaN(d.getTime()) ? d.toISOString().split('T')[0] : item['created_at'];
+      }
+
+      const forma = item['idFormaPago'] ?? item['forma'];
+      if (forma === 1 || forma === '1') {
+        if ('idCuenta' in nuevoItem) {
+          nuevoItem['idCuenta'] = 0;
+        }
+        if ('cuenta' in nuevoItem) {
+          nuevoItem['cuenta'] = 0;
+        }
+      }
+
       return nuevoItem;
     });
 
