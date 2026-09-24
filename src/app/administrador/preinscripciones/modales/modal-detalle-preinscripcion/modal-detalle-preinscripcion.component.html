@@ -125,9 +125,17 @@
             </div>
           </div>
           <hr class="my-2">
+          <div class="mb-1" *ngIf="datos.universidadAspiracion">
+            <span class="text-muted small d-block">Universidad de Aspiración:</span>
+            <strong class="text-dark">{{ datos.universidadAspiracion }}</strong>
+          </div>
           <div class="mb-1">
             <span class="text-muted small d-block">Centro de Aspiración:</span>
             <strong class="text-primary">{{ datos.centroAspiracion || 'No especificado' }}</strong>
+          </div>
+          <div class="mb-1" *ngIf="datos.calendarioAspiracion">
+            <span class="text-muted small d-block">Calendario de Aspiración:</span>
+            <span class="badge bg-secondary text-white">{{ datos.calendarioAspiracion }}</span>
           </div>
           <div>
             <span class="text-muted small d-block">Carrera de Aspiración:</span>

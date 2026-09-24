@@ -172,7 +172,7 @@ export class PreinscripcionesComponent implements OnInit {
         celular: d.celularAlumno || '',
         correo: d.correo || '',
         plantel: d.plantelEleccion || 'No especificado',
-        carrera: d.carrera || d.centroAspiracion || 'No especificada',
+        carrera: d.carrera ? `${d.carrera}${d.calendarioAspiracion ? ' (' + d.calendarioAspiracion + ')' : ''}` : (d.centroAspiracion || 'No especificada'),
         raw: item
       };
     });
@@ -267,19 +267,45 @@ export class PreinscripcionesComponent implements OnInit {
       if (munEsc) ficha.escolares.idMunicipio = munEsc.id;
     }
 
+    const uniObj = this.listas?.escolares?.universidades?.find((u: any) =>
+      u.nombre?.toLowerCase().trim() === d.universidadAspiracion?.toLowerCase().trim() ||
+      u.siglas?.toLowerCase().trim() === d.universidadAspiracion?.toLowerCase().trim()
+    );
+    if (uniObj) {
+      ficha.escolares.idUniversidad = uniObj.id;
+    }
+
+    const calObj = this.listas?.inscripcion?.calendarios?.find((cal: any) =>
+      cal.nombre?.toLowerCase().trim() === d.calendarioAspiracion?.toLowerCase().trim()
+    );
+    if (calObj) {
+      ficha.inscripcion.idCalendario = calObj.id;
+    }
+
     const cenObj = this.listas?.escolares?.centros?.find((c: any) =>
       c.nombre?.toLowerCase().trim() === d.centroAspiracion?.toLowerCase().trim() ||
       c.siglas?.toLowerCase().trim() === d.centroAspiracion?.toLowerCase().trim()
     );
     if (cenObj) {
       ficha.escolares.idCentroUniversitario = cenObj.id;
-      if (cenObj.idUniversidad) ficha.escolares.idUniversidad = cenObj.idUniversidad;
+      if (!ficha.escolares.idUniversidad && cenObj.idUniversidad) {
+        ficha.escolares.idUniversidad = cenObj.idUniversidad;
+      }
 
       const carObj = this.listas?.escolares?.carreras?.find((c: any) =>
         c.idCentroUniversitario === cenObj.id &&
+        (calObj ? Number(c.idCalendario) === Number(calObj.id) : true) &&
         c.nombre?.toLowerCase().trim() === d.carrera?.toLowerCase().trim()
       );
-      if (carObj) ficha.escolares.idCarrera = carObj.id;
+      if (carObj) {
+        ficha.escolares.idCarrera = carObj.id;
+      } else {
+        const carFallback = this.listas?.escolares?.carreras?.find((c: any) =>
+          c.idCentroUniversitario === cenObj.id &&
+          c.nombre?.toLowerCase().trim() === d.carrera?.toLowerCase().trim()
+        );
+        if (carFallback) ficha.escolares.idCarrera = carFallback.id;
+      }
     }
 
     // 5. Publicitarios
