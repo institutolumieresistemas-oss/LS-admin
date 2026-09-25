@@ -49,9 +49,23 @@ export class ModalIngresoDirectivosComponent {
     }
   }
 
+  actualizarConcepto(){
+    if (this.dato.idRubro == 1 && this.dato.idTipo == 1) {
+      this.dato.concepto = 'Inscripcion';
+    } else if (this.dato.idRubro == 1 && this.dato.idTipo == 2) {
+      this.dato.concepto = 'Abono';
+    }
+  }
+
   buscarTipos(){
     this.dato.idTipo = (this.modificar) ? this.dato.idTipo : 0;
     this.tipos = this.generales.sublista(this.listas.tipos, this.dato.idRubro, 'idRubro');
+    this.actualizarConcepto();
+  }
+
+  cambiarTipo(tipo: any){
+    this.dato.idTipo = tipo;
+    this.actualizarConcepto();
   }
   
   emitir() {

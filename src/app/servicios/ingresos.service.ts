@@ -15,24 +15,40 @@ export class IngresosService {
   });
   uri = environment.url+'ingresos/';
   
+  formatearConcepto(ingreso: any) {
+    if (ingreso) {
+      if (ingreso.idRubro == 1 && ingreso.idTipo == 1) {
+        ingreso.concepto = 'Inscripcion';
+      } else if (ingreso.idRubro == 1 && ingreso.idTipo == 2) {
+        ingreso.concepto = 'Abono';
+      }
+    }
+    return ingreso;
+  }
+  
   mostrar(body: any) {
     const url = this.uri + 'mostrar';
-    return this.http.post(url, body, {headers: this.headers}).pipe( map(respuesta => respuesta) );
+    return this.http.post(url, body, {headers: this.headers}).pipe( map((respuesta: any) => {
+      if (respuesta && Array.isArray(respuesta.datos)) {
+        respuesta.datos.forEach((item: any) => this.formatearConcepto(item));
+      }
+      return respuesta;
+    }) );
   }
   
   nuevo(body: any) {
     const url = this.uri + 'nuevo';
-    return this.http.post(url, body, {headers: this.headers}).pipe( map(respuesta => respuesta) );
+    return this.http.post(url, body, {headers: this.headers}).pipe( map((respuesta: any) => this.formatearConcepto(respuesta)) );
   }
   
   modificar(body: any) {
     const url = this.uri + 'modificar';
-    return this.http.post(url, body, {headers: this.headers}).pipe( map(respuesta => respuesta) );
+    return this.http.post(url, body, {headers: this.headers}).pipe( map((respuesta: any) => this.formatearConcepto(respuesta)) );
   }
   
   eliminar(body: any){
     const url = this.uri + 'eliminar';
-    return this.http.post(url, body, {headers: this.headers}).pipe( map(respuesta => respuesta) );
+    return this.http.post(url, body, {headers: this.headers}).pipe( map((respuesta: any) => this.formatearConcepto(respuesta)) );
   }
   
   activar(body: any){
@@ -47,12 +63,22 @@ export class IngresosService {
 
   buscar(body: any){
     const url = this.uri + 'buscar';
-    return this.http.post(url, body, {headers: this.headers}).pipe( map(respuesta => respuesta) );
+    return this.http.post(url, body, {headers: this.headers}).pipe( map((respuesta: any) => {
+      if (Array.isArray(respuesta)) {
+        respuesta.forEach((item: any) => this.formatearConcepto(item));
+      }
+      return respuesta;
+    }) );
   }
 
   gerentes(body: any){
     const url = this.uri + 'gerentes';
-    return this.http.post(url, body, {headers: this.headers}).pipe( map(respuesta => respuesta) );
+    return this.http.post(url, body, {headers: this.headers}).pipe( map((respuesta: any) => {
+      if (Array.isArray(respuesta)) {
+        respuesta.forEach((item: any) => this.formatearConcepto(item));
+      }
+      return respuesta;
+    }) );
   }
 
   cargar(body: any){
@@ -86,6 +112,11 @@ export class IngresosService {
   }
   
   validar(dato: any){
+    if (dato.idRubro == 1 && dato.idTipo == 1 && (!dato.concepto || dato.concepto.trim() === '')) {
+      dato.concepto = 'Inscripcion';
+    } else if (dato.idRubro == 1 && dato.idTipo == 2 && (!dato.concepto || dato.concepto.trim() === '')) {
+      dato.concepto = 'Abono';
+    }
     if(this.generales.validarString(dato.concepto)){
       this.generales.mensajeError('No se ha ingresado el concepto');
       return false;

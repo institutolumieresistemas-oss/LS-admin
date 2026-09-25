@@ -18,7 +18,7 @@
                 <app-select [etiqueta]="'Rubro'" [dato]="dato.idRubro" [datos]="listas.rubros" (emitidor)="dato.idRubro = $event; buscarTipos();"></app-select>
             </div>
             <div class="col-sm-4">
-                <app-select [etiqueta]="'Tipo'" [dato]="dato.idTipo" [datos]="tipos" (emitidor)="dato.idTipo = $event;"></app-select>
+                <app-select [etiqueta]="'Tipo'" [dato]="dato.idTipo" [datos]="tipos" (emitidor)="cambiarTipo($event);"></app-select>
             </div>
             <div class="col-sm-4">
                 <app-select [des]="modificar" [etiqueta]="'Calendario'" [dato]="dato.idCalendario" [datos]="listas.calendarios" (emitidor)="dato.idCalendario = $event;"></app-select>

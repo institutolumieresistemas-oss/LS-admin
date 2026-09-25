@@ -37,12 +37,34 @@ export class ReportesService {
 
   ingresosGenerales(body: any) {
     const url = this.uri + 'ingresosGenerales';
-    return this.http.post(url, body, {headers: this.headers}).pipe( map(respuesta => respuesta));
+    return this.http.post(url, body, {headers: this.headers}).pipe( map((respuesta: any) => {
+      if (Array.isArray(respuesta)) {
+        respuesta.forEach((item: any) => {
+          if (item && item.idRubro == 1 && item.idTipo == 1) {
+            item.concepto = 'Inscripcion';
+          } else if (item && item.idRubro == 1 && item.idTipo == 2) {
+            item.concepto = 'Abono';
+          }
+        });
+      }
+      return respuesta;
+    }));
   }
 
   ingresosBasico(body: any) {
     const url = this.uri + 'ingresosBasico';
-    return this.http.post(url, body, {headers: this.headers}).pipe( map(respuesta => respuesta));
+    return this.http.post(url, body, {headers: this.headers}).pipe( map((respuesta: any) => {
+      if (Array.isArray(respuesta)) {
+        respuesta.forEach((item: any) => {
+          if (item && item.idRubro == 1 && item.idTipo == 1) {
+            item.concepto = 'Inscripcion';
+          } else if (item && item.idRubro == 1 && item.idTipo == 2) {
+            item.concepto = 'Abono';
+          }
+        });
+      }
+      return respuesta;
+    }));
   }
 
   egresosBasico(body: any) {
