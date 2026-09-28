@@ -20,11 +20,11 @@ export class AbonoPrincipalComponent {
   }
   @Output() emitidor = new EventEmitter();
   dato = {
-    idConcepto: 0,
+    idConcepto: 1,
     monto: '',
     idFormaPago: 0,
     idMetodoPago: 2,
-    concepto: '',
+    concepto: 'Abono',
     imagen: '',
     propietario: '',
     referencia: '',
@@ -37,7 +37,14 @@ export class AbonoPrincipalComponent {
   }
   constructor(private generales: GeneralesService){}
 
+  ngOnInit(){
+    this.dato.idConcepto = 1;
+    this.dato.concepto = 'Abono';
+  }
+
   emitir(){
+    this.dato.idConcepto = 1;
+    this.dato.concepto = 'Abono';
     this.emitidor.emit(this.dato);
   }
 }

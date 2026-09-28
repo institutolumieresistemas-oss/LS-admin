@@ -84,7 +84,9 @@ export class CuentaDatosComponent {
   agregarAbono(dato: any): any{
     dato.total = parseFloat(dato.monto);
     dato.id = this.cuenta.abonos.length + 1;
-    dato.idConcepto = dato.idConcepto;
+    const esCompleto = parseFloat(dato.monto) >= (this.total - 0.01);
+    dato.idConcepto = esCompleto ? 2 : 1;
+    dato.concepto = esCompleto ? 'Inscripcion' : 'Abono';
     if(!this.servicio.validarAbono(dato)){
       return 0;
     }

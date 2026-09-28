@@ -42,6 +42,7 @@ export class AbonoComponent {
 
   verificarConcepto(){
     this.dato.idMetodoPago = (this.dato.idConcepto.toString() === '2') ? 1 : 0;
+    this.dato.concepto = (this.dato.idConcepto.toString() === '2') ? 'Inscripcion' : 'Abono';
     this.verificarMetodo();
   }
 
@@ -50,7 +51,11 @@ export class AbonoComponent {
   }
 
   emitir(){
-    
+    if (this.dato.idConcepto.toString() === '2') {
+      this.dato.concepto = 'Inscripcion';
+    } else {
+      this.dato.concepto = 'Abono';
+    }
     this.emitidor.emit(this.dato);
   }
 }

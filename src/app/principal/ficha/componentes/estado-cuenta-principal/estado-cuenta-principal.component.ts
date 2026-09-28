@@ -91,12 +91,14 @@ export class EstadoCuentaPrincipalComponent {
   }
 
   nuevoAbono(dato: any){
+    dato.idConcepto = 1;
+    dato.concepto = 'Abono';
     if(this.servicio.validarAbono(dato)){
       dato.id = this.ficha;
       dato.idCalendario = this.cuenta.ficha.idCalendario;
       dato.idNivel = this.cuenta.ficha.idNivel;
-      dato.concepto = this.generales.busquedaIdentificador(this.listas.conceptosabonos, dato.idConcepto).nombre;
-      dato.idConcepto = dato.idConcepto;
+      dato.concepto = 'Abono';
+      dato.idConcepto = 1;
       
       let montoOriginal = parseFloat(dato.monto);
       let montoCalculado = montoOriginal;
