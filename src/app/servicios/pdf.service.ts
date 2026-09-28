@@ -1651,13 +1651,14 @@ export class PdfService {
   }
 
   async pdfBoletaAlumno(alumno: any){
+    this.generales.mostrarCargando();
     this.servicio.boletaAlumno(alumno).subscribe((respuesta: any) => {
+      this.generales.ocultarCargando();
       let logo = this.generales.logos;
       const pdf = new PdfMakeWrapper();
       pdf.pageMargins([ 20, 20, 20, 20 ]);
       pdf.pageSize('A4');
 
-      
       let columnaLogotipo = new Table([
         [{image: logo, width: 64, height: 20}]
       ]).layout('noBorders').widths(['100%']).end;
@@ -1670,62 +1671,74 @@ export class PdfService {
       pdf.add(columnaEncabezado);
       pdf.add(pdf.ln(2));
 
+      const ficha = respuesta?.ficha || {};
+      const alumnoNombre = ficha.alumno || 'N/A';
+      const cursoNombre = ficha.curso || 'N/A';
+      const calendarioNombre = ficha.calendario || 'N/A';
+      const promedioAlumno = (ficha.promedio !== undefined && ficha.promedio !== null) ? String(ficha.promedio) : 'N/A';
+      const puntajeCarrera = (ficha.puntaje !== undefined && ficha.puntaje !== null) ? String(ficha.puntaje) : 'N/A';
+
       let columnaDatosAlumno = new Table([
-        [new Txt('Alumno: ' + respuesta.ficha.alumno).fontSize(11).end],
-        [new Txt('Curso: ' + respuesta.ficha.curso).fontSize(11).end],
-        [new Txt('Calendario: ' + respuesta.ficha.calendario).fontSize(11).end],
-        [new Txt('Promedio Alumno:' + respuesta.ficha.promedio).fontSize(11).end]
+        [new Txt('Alumno: ' + alumnoNombre).fontSize(11).end],
+        [new Txt('Curso: ' + cursoNombre).fontSize(11).end],
+        [new Txt('Calendario: ' + calendarioNombre).fontSize(11).end],
+        [new Txt('Promedio Alumno: ' + promedioAlumno).fontSize(11).end]
       ]).layout('noBorders').widths(['100%']).end;
       pdf.add(columnaDatosAlumno);
       pdf.add(pdf.ln(2));
       
-      let examenes = respuesta.examenes;
-      let encabezados = new Array();
-      let sizes = new Array();
-      let listaExamenes = new Array();
+      let examenes = respuesta?.examenes || [];
+      let encabezadosRespuesta = respuesta?.encabezados || [];
 
-      respuesta.encabezados.forEach((element: any) => {
-        encabezados.push(new Cell(new Txt(element).fontSize(8).bold().end).fillColor('#AFC6DD').end);
-      });
-      listaExamenes.push(encabezados);
+      if (encabezadosRespuesta.length > 0 && examenes.length > 0) {
+        let encabezados = new Array();
+        let sizes = new Array();
+        let listaExamenes = new Array();
 
-      let size = 100 / encabezados.length;
-      encabezados.forEach((elemento: any) => {
-        sizes.push(size.toString()+'%');
-      });
+        encabezadosRespuesta.forEach((element: any) => {
+          encabezados.push(new Cell(new Txt(String(element || '')).fontSize(8).bold().end).fillColor('#AFC6DD').end);
+        });
+        listaExamenes.push(encabezados);
 
-      examenes.forEach((examen: any) => {
-        let arregloExamenes = new Array();
-        arregloExamenes.push(new Txt(examen.nombre).fontSize(8).end);
-        examen.secciones.forEach((seccion: any) => {
-          if(seccion.promedio !== '-'){
-            arregloExamenes.push(new Txt(parseInt(seccion.promedio).toString()).fontSize(8).end);
-          }else{
-            arregloExamenes.push(new Txt(seccion.promedio).fontSize(8).end);
+        let size = (100 / encabezados.length).toFixed(2);
+        encabezados.forEach(() => {
+          sizes.push(size + '%');
+        });
+
+        examenes.forEach((examen: any) => {
+          let arregloExamenes = new Array();
+          arregloExamenes.push(new Txt(String(examen?.nombre || '')).fontSize(8).end);
+          if (Array.isArray(examen?.secciones)) {
+            examen.secciones.forEach((seccion: any) => {
+              if (seccion && seccion.promedio !== '-' && seccion.promedio !== null && seccion.promedio !== undefined) {
+                const parsed = parseInt(seccion.promedio);
+                arregloExamenes.push(new Txt(isNaN(parsed) ? String(seccion.promedio) : parsed.toString()).fontSize(8).end);
+              } else {
+                arregloExamenes.push(new Txt(String(seccion?.promedio || '-')).fontSize(8).end);
+              }
+            });
           }
           
+          arregloExamenes.push(new Txt(String(examen?.promedio ?? '-')).fontSize(8).end);
+          arregloExamenes.push(new Txt(String(examen?.total ?? '-')).fontSize(8).end);
+          arregloExamenes.push(new Txt(puntajeCarrera).fontSize(8).end);
+          arregloExamenes.push(new Txt(String(examen?.diferencia ?? '-')).fontSize(8).end);
+          
+          const dif = parseFloat(examen?.diferencia);
+          if (!isNaN(dif) && dif >= 0) {
+            arregloExamenes.push(new Txt('ADMITIDO').fontSize(8).color('green').end);
+          } else {
+            arregloExamenes.push(new Txt('NO ADMITIDO').fontSize(8).color('red').end);
+          }
+          listaExamenes.push(arregloExamenes);
         });
         
-        arregloExamenes.push(new Txt(examen.promedio).fontSize(8).end);
-        arregloExamenes.push(new Txt(examen.total).fontSize(8).end);
-        arregloExamenes.push(new Txt(respuesta.ficha.puntaje).fontSize(8).end);
-        arregloExamenes.push(new Txt(examen.diferencia).fontSize(8).end);
-        
-        if(examen.diferencia >= 0){
-          arregloExamenes.push(new Txt('ADMITIDO').fontSize(8).color('green').end);
-        }else{
-          arregloExamenes.push(new Txt('NO ADMITIDO').fontSize(8).color('red').end);
-        }
-        listaExamenes.push(arregloExamenes);
-      });
-      
-      if(listaExamenes.length > 1){
         let tablaExamenes = new Table(
           listaExamenes
         ).widths(sizes).alignment('center').end;
-  
+
         pdf.add(tablaExamenes);
-      }else{
+      } else {
         let columnaExamenes = new Table([
           [new Txt('Aun no existen calificaciones disponibles').fontSize(11).end]
         ]).layout('noBorders').widths(['100%']).alignment('center').end;
@@ -1737,18 +1750,21 @@ export class PdfService {
       
     },
     error => {
+      this.generales.ocultarCargando();
       this.generales.interpretarError(error);
     });
   }
 
   async pdfBoletaGrupo(body: any){
+    this.generales.mostrarCargando();
     this.servicio.boletaGrupo(body).subscribe((respuesta: any) => {
-      let logo = this.generales.logo;
+      this.generales.ocultarCargando();
+      let logo = this.generales.logos;
       const pdf = new PdfMakeWrapper();
-      pdf.pageMargins([ 20, 20, 20, 20 ]);
+      pdf.pageMargins([ 15, 15, 15, 15 ]);
       pdf.pageSize('A4');
+      pdf.pageOrientation('landscape');
 
-      
       let columnaLogotipo = new Table([
         [{image: logo, width: 64, height: 20}]
       ]).layout('noBorders').widths(['100%']).end;
@@ -1761,22 +1777,33 @@ export class PdfService {
       pdf.add(columnaEncabezado);
       pdf.add(pdf.ln(2));
 
-      let size = 70 / (respuesta[0].length - 1);
-      let sizes = new Array();
-      let listaFinal = new Array();
-      sizes.push('30%');
-      respuesta[0].forEach((element: any) => {
-        sizes.push(size.toString() + '%');
-      });
+      if (!respuesta || !Array.isArray(respuesta) || respuesta.length <= 1 || !respuesta[0] || respuesta[0].length <= 1) {
+        let columnaExamenes = new Table([
+          [new Txt('Aun no existen calificaciones disponibles').fontSize(11).end]
+        ]).layout('noBorders').widths(['100%']).alignment('center').end;
+        pdf.add(columnaExamenes);
+        pdf.create().open();
+        return;
+      }
 
+      const totalCols = respuesta[0].length;
+      const numExams = totalCols - 1;
+      const examWidth = (75 / numExams).toFixed(2) + '%';
+      let sizes: Array<string> = ['25%'];
+      for (let i = 1; i < totalCols; i++) {
+        sizes.push(examWidth);
+      }
+
+      let listaFinal = new Array();
       let inicio = false;
       respuesta.forEach((elemento: any) => {
         let parte = new Array();
         elemento.forEach((registro: any) => {
+          const val = (registro !== null && registro !== undefined) ? String(registro) : '';
           if(!inicio){
-            parte.push(new Cell(new Txt(registro).fontSize(8).bold().end).fillColor('#AFC6DD').end);
+            parte.push(new Cell(new Txt(val).fontSize(7).bold().end).fillColor('#AFC6DD').end);
           }else{
-            parte.push(new Txt(registro).fontSize(8).end);
+            parte.push(new Txt(val).fontSize(7).end);
           }
         });
         listaFinal.push(parte);
@@ -1801,6 +1828,7 @@ export class PdfService {
       
     },
     error => {
+      this.generales.ocultarCargando();
       this.generales.interpretarError(error);
     });
   }
