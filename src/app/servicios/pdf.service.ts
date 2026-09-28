@@ -41,7 +41,7 @@ export class PdfService {
 
 
   async pdfFicha(ficha: string) {
-    let logo = this.generales.logo;
+    let logo = this.generales.logos;
     let face = this.generales.face;
     let instagram = this.generales.instagram;
     let whatsapp = this.generales.whatsapp;
