@@ -35,8 +35,14 @@ export class CalificadorComponent implements OnInit {
   }
 
   buscar(){
+    this.cargando = true;
     this.calificador.grupos(this.busqueda).subscribe(respuesta => {
+      this.cargando = false;
       this.datos = respuesta;
+    },
+    error => {
+      this.cargando = false;
+      this.generales.interpretarError(error);
     });
   }
 

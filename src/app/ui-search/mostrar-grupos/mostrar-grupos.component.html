@@ -54,6 +54,9 @@
             <div class="col-sm-6">
                 <app-titulo [color]="'primary'" [titulo]="grupo.precio" [fuente]="'info'"></app-titulo>
             </div>
+            <div class="col-sm-12" *ngIf="grupo.totalAlumnos !== undefined">
+                <app-titulo [color]="'success'" [icono]="'fas fa-user-graduate'" [titulo]="' Alumnos: ' + grupo.totalAlumnos" [fuente]="'success'"></app-titulo>
+            </div>
         </div>
     </div>
 </div>

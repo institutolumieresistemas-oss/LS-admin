@@ -14,9 +14,14 @@
             </div>
         </div>
         <div class="card-body bg-white">
-            <div class="row">
+            <div class="row" *ngIf="datos && datos.length > 0">
                 <div class="col-sm-4" *ngFor="let item of datos">
                     <app-mostrar-grupos [grupo]="item" (emitidor)="calificar($event)"></app-mostrar-grupos>
+                </div>
+            </div>
+            <div class="row" *ngIf="datos && datos.length === 0">
+                <div class="col-12 text-center text-muted my-4">
+                    <h4>No se encontraron grupos con alumnos para los criterios seleccionados.</h4>
                 </div>
             </div>
         </div>
