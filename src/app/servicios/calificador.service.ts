@@ -15,6 +15,57 @@ export class CalificadorService {
   });
   uri = environment.url + 'calificador/';
   
+  busquedaGuardada: any = null;
+  datosGuardados: any = null;
+  listaHorariosGuardada: any = null;
+
+  guardarEstado(busqueda: any, datos: any, listaHorarios: any = null) {
+    this.busquedaGuardada = busqueda ? { ...busqueda } : null;
+    this.datosGuardados = datos ? [ ...datos ] : null;
+    this.listaHorariosGuardada = listaHorarios ? [ ...listaHorarios ] : null;
+    try {
+      sessionStorage.setItem('calificador_busqueda', JSON.stringify(this.busquedaGuardada));
+      sessionStorage.setItem('calificador_datos', JSON.stringify(this.datosGuardados));
+      sessionStorage.setItem('calificador_horarios', JSON.stringify(this.listaHorariosGuardada));
+    } catch (e) {}
+  }
+
+  obtenerEstado() {
+    if (this.datosGuardados) {
+      return {
+        busqueda: this.busquedaGuardada,
+        datos: this.datosGuardados,
+        listaHorarios: this.listaHorariosGuardada
+      };
+    }
+    try {
+      const b = sessionStorage.getItem('calificador_busqueda');
+      const d = sessionStorage.getItem('calificador_datos');
+      const h = sessionStorage.getItem('calificador_horarios');
+      if (d) {
+        this.busquedaGuardada = b ? JSON.parse(b) : null;
+        this.datosGuardados = JSON.parse(d);
+        this.listaHorariosGuardada = h ? JSON.parse(h) : null;
+        return {
+          busqueda: this.busquedaGuardada,
+          datos: this.datosGuardados,
+          listaHorarios: this.listaHorariosGuardada
+        };
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  limpiarEstado() {
+    this.busquedaGuardada = null;
+    this.datosGuardados = null;
+    this.listaHorariosGuardada = null;
+    try {
+      sessionStorage.removeItem('calificador_busqueda');
+      sessionStorage.removeItem('calificador_datos');
+      sessionStorage.removeItem('calificador_horarios');
+    } catch (e) {}
+  }
 
   selects() {
     const url = this.uri + 'selects';

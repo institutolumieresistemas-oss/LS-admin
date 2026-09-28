@@ -29,28 +29,28 @@
 </div>
 <app-busquedas *ngIf="verBuscar" (emitidor)="verBuscar = $event;">
     <div class="col-sm-12">
-        <app-select [datos]="listas.actuales" [etiqueta]="'Calendarios'" (emitidor)="busqueda.idCalendario = $event;"></app-select>
+        <app-select [datos]="listas?.actuales" [etiqueta]="'Calendarios'" [dato]="busqueda.idCalendario" (emitidor)="busqueda.idCalendario = $event;"></app-select>
     </div>
     <div class="col-sm-12">
-        <app-select [datos]="listas.niveles" [etiqueta]="'Niveles'" (emitidor)="busqueda.idNivel = $event;"></app-select>
+        <app-select [datos]="listas?.niveles" [etiqueta]="'Niveles'" [dato]="busqueda.idNivel" (emitidor)="busqueda.idNivel = $event;"></app-select>
     </div>
     <div class="col-sm-12">
-        <app-select [datos]="listas.subniveles" [etiqueta]="'Subniveles'" (emitidor)="busqueda.idSubnivel = $event;"></app-select>
+        <app-select [datos]="listas?.subniveles" [etiqueta]="'Subniveles'" [dato]="busqueda.idSubnivel" (emitidor)="busqueda.idSubnivel = $event;"></app-select>
     </div>
     <div class="col-sm-12">
-        <app-select [datos]="listas.modalidades" [etiqueta]="'Modalidad'" (emitidor)="busqueda.idModalidad = $event;"></app-select>
+        <app-select [datos]="listas?.modalidades" [etiqueta]="'Modalidad'" [dato]="busqueda.idModalidad" (emitidor)="busqueda.idModalidad = $event;"></app-select>
     </div>
     <div class="col-sm-12">
-        <app-select [datos]="listas.cursos" [etiqueta]="'Cursos'" (emitidor)="busqueda.idCurso = $event;"></app-select>
+        <app-select [datos]="listas?.cursos" [etiqueta]="'Cursos'" [dato]="busqueda.idCurso" (emitidor)="busqueda.idCurso = $event;"></app-select>
     </div>
     <div class="col-sm-12">
-        <app-select [datos]="listas.categorias" [etiqueta]="'Categorias'" (emitidor)="busqueda.idCategoria = $event;"></app-select>
+        <app-select [datos]="listas?.categorias" [etiqueta]="'Categorias'" [dato]="busqueda.idCategoria" (emitidor)="busqueda.idCategoria = $event;"></app-select>
     </div>
     <div class="col-sm-12">
-        <app-select [datos]="listas.turnos" [etiqueta]="'Turno'" (emitidor)="busqueda.idTurno = $event; traerHorarios();"></app-select>
+        <app-select [datos]="listas?.turnos" [etiqueta]="'Turno'" [dato]="busqueda.idTurno" (emitidor)="busqueda.idTurno = $event; traerHorarios();"></app-select>
     </div>
     <div class="col-sm-12">
-        <app-select [datos]="listaHorarios" [etiqueta]="'Horario'" (emitidor)="busqueda.idHorario = $event;"></app-select>
+        <app-select [datos]="listaHorarios" [etiqueta]="'Horario'" [dato]="busqueda.idHorario" (emitidor)="busqueda.idHorario = $event;"></app-select>
     </div>
     <div class="col-sm-12">
         <button class="btn btn-success" (click)="buscar()">Buscar</button>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GeneralesService } from '../../servicios/generales.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CalificadorService } from '../../servicios/calificador.service';
 import { PdfService } from '../../servicios/pdf.service';
 import { datatableConfig } from '../../interfaces/tables.interface';
@@ -29,11 +29,16 @@ export class CalificarGrupoComponent implements OnInit {
   constructor(private generales: GeneralesService,
               private rutaActiva: ActivatedRoute,
               private calificador: CalificadorService,
-              private pdf: PdfService) { }
+              private pdf: PdfService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.busqueda.idGrupo = this.rutaActiva.snapshot.params['grupo'];
     this.traerAlumnos();
+  }
+
+  regresar() {
+    this.router.navigate(['admin/calificador']);
   }
 
   traerAlumnos() {

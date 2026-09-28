@@ -2,15 +2,18 @@
     <div class="card bg-secondary shadow">
         <div class="card-header bg-info border-0">
             <div class="row align-items-center">
-                <div class="col-4">
-                    <h3 class="mb-0 text-white">Calificar Grupo</h3>
+                <div class="col-md-5 col-sm-12 mb-2 mb-md-0 d-flex align-items-center">
+                    <button class="btn btn-neutral btn-sm me-3 mr-3" title="Regresar al calificador" (click)="regresar()">
+                        <i class="fas fa-arrow-left"></i> Regresar
+                    </button>
+                    <h3 class="mb-0 text-white d-inline">Calificar Grupo</h3>
                 </div>
-                <div class="col-sm-4">
-                    <button class="btn btn-primary" title="Boleta de Grupo" (click)="boletaGrupo()"><i class="fas fa-file-pdf"></i></button>
+                <div class="col-md-3 col-sm-6 mb-2 mb-md-0">
+                    <button class="btn btn-primary" title="Boleta de Grupo" (click)="boletaGrupo()"><i class="fas fa-file-pdf"></i> Boleta Grupo</button>
                 </div>
-                <div class="col-sm-4" *ngIf="seleccion !== undefined">
-                    <button class="btn btn-success" title="Calificar" (click)="calificar()"><i class="fas fa-file-signature"></i></button>
-                    <button class="btn btn-danger" title="Boleta de Alumno" (click)="boletaAlumno()"><i class="fas fa-file-pdf"></i></button>
+                <div class="col-md-4 col-sm-6 text-end" *ngIf="seleccion !== undefined">
+                    <button class="btn btn-success me-2 mr-2" title="Calificar" (click)="calificar()"><i class="fas fa-file-signature"></i> Calificar</button>
+                    <button class="btn btn-danger" title="Boleta de Alumno" (click)="boletaAlumno()"><i class="fas fa-file-pdf"></i> Boleta Alumno</button>
                 </div>
             </div>
         </div>

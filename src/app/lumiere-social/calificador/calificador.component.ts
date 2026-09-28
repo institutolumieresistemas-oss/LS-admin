@@ -31,6 +31,12 @@ export class CalificadorComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
+    const estado = this.calificador.obtenerEstado();
+    if (estado && estado.datos) {
+      this.busqueda = estado.busqueda ? { ...estado.busqueda } : this.busqueda;
+      this.datos = estado.datos;
+      this.listaHorarios = estado.listaHorarios;
+    }
     this.mostrar();
   }
 
@@ -39,6 +45,7 @@ export class CalificadorComponent implements OnInit {
     this.calificador.grupos(this.busqueda).subscribe(respuesta => {
       this.cargando = false;
       this.datos = respuesta;
+      this.calificador.guardarEstado(this.busqueda, this.datos, this.listaHorarios);
     },
     error => {
       this.cargando = false;
@@ -47,12 +54,17 @@ export class CalificadorComponent implements OnInit {
   }
 
   traerHorarios() {
-    this.listaHorarios = this.generales.sublista(this.listas.horarios, this.busqueda.idTurno, 'idTurno');
+    if (this.listas && this.listas.horarios) {
+      this.listaHorarios = this.generales.sublista(this.listas.horarios, this.busqueda.idTurno, 'idTurno');
+    }
   }
 
   mostrar() {
     this.calificador.mostrar().subscribe(respuesta => {
       this.listas = respuesta;
+      if (this.busqueda.idTurno && (!this.listaHorarios || this.listaHorarios.length === 0)) {
+        this.traerHorarios();
+      }
     },
     error => {
       this.generales.interpretarError(error);
